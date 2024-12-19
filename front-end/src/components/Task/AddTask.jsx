@@ -1,18 +1,8 @@
-import {
-  getDownloadURL,
-  getStorage,
-  ref,
-  uploadBytesResumable,
-} from "firebase/storage";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { BiImages } from "react-icons/bi";
 import { toast } from "sonner";
-import {
-  useCreateTaskMutation,
-  useUpdateTaskMutation,
-} from "../../redux/slices/api/taskApiSlice";
-import { app } from "../../utils/firebase";
+
 import Button from "../Button";
 import ModalWrapper from "../ModalWrapper";
 import SelectList from "../SelectList";
@@ -23,16 +13,14 @@ import { dateFormatter } from "../../utils";
 const LISTS = ["TODO", "IN PROGRESS", "COMPLETED"];
 const PRIORITY = ["HIGH", "MEDIUM", "NORMAL", "LOW"];
 
-const uploadedFileURLs = [];
-
 function AddTask({ open, setOpen, task }) {
   const defaultValues = {
     title: task?.title || "",
     date: dateFormatter(task?.date || new Date()),
-    team: [],
-    stage: "",
-    priority: "",
-    assets: [],
+    team: task?.team || [],
+    stage: task?.stage || LISTS[0],
+    priority: task?.priority || PRIORITY[2],
+    assets: task?.assets || [],
   };
 
   const {
@@ -46,84 +34,52 @@ function AddTask({ open, setOpen, task }) {
   const [priority, setPriority] = useState(
     task?.priority?.toUpperCase() || PRIORITY[2]
   );
-
-  const [assets, setAssets] = useState([]);
+  const [assets, setAssets] = useState(task?.assets || []);
   const [uploading, setUploading] = useState(false);
 
-  const [createTask, { isLoading }] = useCreateTaskMutation();
-  const [updateTask, { isLoading: isUpdating }] = useUpdateTaskMutation();
-  const URLS = task?.assets ? [...task.assets] : [];
-
   const submitHandler = async (data) => {
-    for (const file of assets) {
-      setUploading(true);
-      try {
-        await uploadFile(file);
-      } catch (error) {
-        console.error("Error uploading file:", error);
-        return;
-      } finally {
-        setUploading(false);
-      }
-    }
-
     try {
-      const newData = {
-        ...data,
-        assets: [...URLS, ...uploadedFileURLs],
-        team,
-        stage,
-        priority,
-      };
+      // Set uploading state to true when the upload starts
+      setUploading(true);
 
-      const res = task?._id
-        ? await updateTask({ ...newData, _id: task._id }).unwrap()
-        : await createTask(newData).unwrap();
+      const formData = new FormData();
+      formData.append("title", data.title);
+      formData.append("stage", stage);
+      formData.append("priority", priority);
+      formData.append("date", data.date);
+      formData.append("team", JSON.stringify(team));
+      assets.forEach((file) => formData.append("assets", file));
 
-      toast.success(res.message);
+      // Check if task exists (for updating) or create a new task
+      const url = task?._id
+        ? `/api/tasks/update/${task._id}` // For updating
+        : `/api/tasks/create`; // For creating
 
-      setTimeout(() => {
-        setOpen(false);
-      }, 500);
+      const response = await fetch(url, {
+        method: task?._id ? "PUT" : "POST",
+        body: formData,
+      });
+
+      const resData = await response.json();
+      if (!response.ok) {
+        throw new Error(resData.message || "Something went wrong");
+      }
+
+      // Set uploading state to false after the upload is completed
+      setUploading(false);
+
+      toast.success(resData.message);
+      setOpen(false);
     } catch (error) {
-      console.log(error);
-      toast.error(error.data.message || error.error);
+      // Set uploading state to false if there's an error
+      setUploading(false);
+      toast.error(error.message);
     }
   };
 
   const handleSelect = (e) => {
-    setAssets(e.target.files);
-  };
-
-  const uploadFile = async (file) => {
-    const storage = getStorage(app);
-
-    const name = new Date().getTime() + file.name;
-    const storageRef = ref(storage, name);
-
-    const uploadTask = uploadBytesResumable(storageRef, file);
-    return new Promise((resolve, reject) => {
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log("Upload is " + progress + "% done");
-        },
-        (error) => {
-          reject(error);
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref)
-            .then((downloadURL) => {
-              resolve(downloadURL);
-            })
-            .catch((error) => {
-              reject(error);
-            });
-        }
-      );
-    });
+    const files = Array.from(e.target.files);
+    setAssets((prevAssets) => [...prevAssets, ...files]);
   };
 
   return (
@@ -159,24 +115,20 @@ function AddTask({ open, setOpen, task }) {
               />
 
               <div className="w-full">
-                {/* TASK DATE */}
-
                 <Textbox
                   placeholder="Date"
                   type="date"
                   name="date"
                   label="Task Date"
                   className="w-full rounded"
-                  register={register("date", {
-                    required: "Date is required",
-                  })}
+                  register={register("date", { required: "Date is required" })}
                   error={errors.date ? errors.date.message : ""}
                 />
               </div>
             </div>
+
             <div className="flex gap-4">
               {/* TASK PRIORITY */}
-
               <SelectList
                 label="Priority Level"
                 lists={PRIORITY}
@@ -194,7 +146,7 @@ function AddTask({ open, setOpen, task }) {
                     type="file"
                     id="imgUpload"
                     className="hidden"
-                    onChange={(e) => handleSelect(e)}
+                    onChange={handleSelect}
                     accept=".jpg, .png, .jpeg"
                     multiple={true}
                   />

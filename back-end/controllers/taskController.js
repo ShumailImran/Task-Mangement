@@ -1,23 +1,28 @@
 import Task from "../models/taskModel.js";
 import Notification from "../models/notificationModel.js";
 import User from "../models/userModel.js";
+import { v2 as cloudinary } from "cloudinary";
+import mongoose from "mongoose";
 
 // // // // CREATE_TASK // // // // //
 
 export const createTask = async (req, res) => {
   try {
     const { userId } = req.user;
+    const { title, team, stage, date, priority } = req.body;
 
-    const { title, team, stage, date, priority, assets } = req.body;
+    // Ensure the team is an array of ObjectIds
+    let teamArray = Array.isArray(team) ? team : JSON.parse(team);
 
+    // Form the text for notification
     let text = "New task has been assigned to you";
-    if (team?.length > 1) {
-      text = text + ` and ${team?.length - 1} others.`;
+    if (teamArray?.length > 1) {
+      text = text + ` and ${teamArray?.length - 1} others.`;
     }
 
     text =
       text +
-      ` The task priority is set a ${priority} priority, so check and act accordingly. The task date is ${new Date(
+      ` The task priority is set as ${priority} priority, so check and act accordingly. The task date is ${new Date(
         date
       ).toDateString()}. Thank you!!!`;
 
@@ -27,18 +32,45 @@ export const createTask = async (req, res) => {
       by: userId,
     };
 
+    // Initialize assets array to store Cloudinary URLs
+    let assets = [];
+
+    // If files are uploaded, process them and upload to Cloudinary
+    if (req.files) {
+      // Use Promise.all to upload files before proceeding
+      const uploadPromises = req.files.map((file) => {
+        return new Promise((resolve, reject) => {
+          cloudinary.uploader
+            .upload_stream({ resource_type: "auto" }, (error, result) => {
+              if (error) {
+                return reject(error);
+              }
+              // Push the uploaded file URL to the assets array
+              assets.push(result?.secure_url);
+              resolve();
+            })
+            .end(file.buffer);
+        });
+      });
+
+      // Wait for all uploads to finish
+      await Promise.all(uploadPromises);
+    }
+
+    // Create the task with the data, including assets
     const task = await Task.create({
       title,
-      team,
+      team: teamArray, // team is now an array of ObjectIds
       stage: stage.toLowerCase(),
       date,
       priority: priority.toLowerCase(),
-      assets,
+      assets, // Contains URLs of uploaded files
       activities: activity,
     });
 
+    // Create a notification for the assigned task
     await Notification.create({
-      team,
+      team: teamArray, // Notify all team members
       text,
       task: task._id,
     });
@@ -305,32 +337,68 @@ export const createSubTask = async (req, res) => {
 export const updateTask = async (req, res) => {
   try {
     const { id } = req.params;
+
+    // Validate the ObjectId
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res
+        .status(400)
+        .json({ status: false, message: "Invalid Task ID" });
+    }
+
     const { title, team, date, stage, priority, assets } = req.body;
 
-    const task = await Task.findById(id);
+    // Parse `team` if it's a string
+    let teamArray = Array.isArray(team) ? team : team ? JSON.parse(team) : [];
 
-    task.title = title;
-    task.team = team;
-    task.date = date;
-    task.stage = stage.toLowerCase();
-    task.priority = priority.toLowerCase();
-    task.assets = assets;
+    // Fetch the task by ID
+    const task = await Task.findById(id);
+    if (!task) {
+      return res.status(404).json({ status: false, message: "Task not found" });
+    }
+
+    // Update task fields
+    task.title = title || task.title;
+    task.team = teamArray.length > 0 ? teamArray : task.team; // Only update if provided
+    task.date = date || task.date;
+    task.stage = stage ? stage.toLowerCase() : task.stage;
+    task.priority = priority ? priority.toLowerCase() : task.priority;
+
+    // Handle new files if provided
+    let updatedAssets = assets || task.assets;
+
+    if (req.files && req.files.length > 0) {
+      const uploadPromises = req.files.map(
+        (file) =>
+          new Promise((resolve, reject) => {
+            cloudinary.uploader
+              .upload_stream({ resource_type: "auto" }, (error, result) => {
+                if (error) {
+                  return reject(error);
+                }
+                resolve(result.secure_url);
+              })
+              .end(file.buffer);
+          })
+      );
+
+      const uploadedFiles = await Promise.all(uploadPromises);
+      updatedAssets = [...updatedAssets, ...uploadedFiles];
+    }
+
+    task.assets = updatedAssets;
 
     await task.save();
 
     res
       .status(200)
-      .json({ status: true, message: "Task updated successfully" });
+      .json({ status: true, message: "Task updated successfully", task });
   } catch (error) {
-    console.log(error);
-    return res
-      .status(400)
-      .json({ status: false, message: "Cannot update Task" });
+    console.error(error);
+    res.status(400).json({ status: false, message: "Cannot update Task" });
   }
 };
 
 // // // // TRASH_TASK // // // // //
-
 export const trashTask = async (req, res) => {
   try {
     const { id } = req.params;
