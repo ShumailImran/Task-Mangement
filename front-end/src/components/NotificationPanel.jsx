@@ -11,42 +11,6 @@ import {
 } from "../redux/slices/api/userApiSlice";
 import ViewNotification from "./ViewNotification";
 
-// DUMMY DATA FOR NOTIFICATIONS
-// const data = [
-//   {
-//     _id: "65c5bbf3787832cf99f28e6d",
-//     team: [
-//       "65c202d4aa62f32ffd1303cc",
-//       "65c27a0e18c0a1b750ad5cad",
-//       "65c30b96e639681a13def0b5",
-//     ],
-//     text: "New task has been assigned to you and 2 others. The task priority is set a normal priority, so check and act accordingly. The task date is Thu Feb 29 2024. Thank you!!!",
-//     task: null,
-//     notiType: "alert",
-//     isRead: [],
-//     createdAt: "2024-02-09T05:45:23.353Z",
-//     updatedAt: "2024-02-09T05:45:23.353Z",
-//     __v: 0,
-//   },
-//   {
-//     _id: "65c5f12ab5204a81bde866ab",
-//     team: [
-//       "65c202d4aa62f32ffd1303cc",
-//       "65c30b96e639681a13def0b5",
-//       "65c317360fd860f958baa08e",
-//     ],
-//     text: "New task has been assigned to you and 2 others. The task priority is set a high priority, so check and act accordingly. The task date is Fri Feb 09 2024. Thank you!!!",
-//     task: {
-//       _id: "65c5f12ab5204a81bde866a9",
-//       title: "Test task",
-//     },
-//     notiType: "alert",
-//     isRead: [],
-//     createdAt: "2024-02-09T09:32:26.810Z",
-//     updatedAt: "2024-02-09T09:32:26.810Z",
-//     __v: 0,
-//   },
-// ];
 const ICONS = {
   alert: (
     <HiBellAlert className="h-5 w-5 text-gray-600 group-hover:text-indigo-600" />
@@ -63,10 +27,14 @@ const NotificationPanel = () => {
   const { data, refetch } = useGetNotificationQuery();
   const [markAsRead] = useMarkNotiAsReadMutation();
 
-  const readHandler = async (type, id) => {
+  const readHandler = async (type, id, closePopover) => {
     await markAsRead({ type, id }).unwrap();
-
     refetch();
+
+    // Close the popover after the action
+    if (closePopover) {
+      closePopover();
+    }
   };
 
   const viewHandler = async (el) => {
@@ -76,12 +44,12 @@ const NotificationPanel = () => {
   };
 
   const callsToAction = [
-    { name: "Cancel", href: "#", icon: "" },
+    { name: "Cancel", href: "#", icon: "", onClick: () => setOpen(false) },
     {
       name: "Mark All Read",
       href: "#",
       icon: "",
-      onClick: () => readHandler("all", ""),
+      onClick: (closePopover) => readHandler("all", "", closePopover),
     },
   ];
 
@@ -110,7 +78,7 @@ const NotificationPanel = () => {
         >
           <Popover.Panel className="absolute -right-16 md:-right-2 z-10 mt-5 flex w-screen max-w-max px-4">
             {({ close }) =>
-              data?.notification?.length > 0 ? (
+              data?.notification?.length > 0 && (
                 <div className="w-screen max-w-md flex-auto overflow-hidden rounded-3xl bg-white text-sm leading-6 shadow-lg ring-1 ring-gray-900/5">
                   <div className="p-4">
                     {data.notification.slice(0, 5).map((item, index) => (
@@ -143,8 +111,8 @@ const NotificationPanel = () => {
                     {callsToAction.map((item) => (
                       <Link
                         key={item.name}
-                        onClick={
-                          item?.onClick ? () => item.onClick() : () => close()
+                        onClick={() =>
+                          item?.onClick ? item.onClick(close) : close()
                         }
                         className="flex items-center justify-center gap-x-2.5 p-3 font-semibold text-blue-600 hover:bg-gray-100"
                       >
@@ -152,10 +120,6 @@ const NotificationPanel = () => {
                       </Link>
                     ))}
                   </div>
-                </div>
-              ) : (
-                <div className="p-4 text-gray-500">
-                  No notifications to display.
                 </div>
               )
             }

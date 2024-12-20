@@ -11,6 +11,7 @@ import {
   useUserActionMutation,
 } from "../redux/slices/api/userApiSlice";
 import { toast } from "sonner";
+import Loader from "../components/Loader";
 
 function Users() {
   const [openDialog, setOpenDialog] = useState(false);
@@ -74,6 +75,13 @@ function Users() {
     setSeleted(el);
     setOpenAction(true);
   };
+
+  if (isLoading)
+    return (
+      <div className="py-10">
+        <Loader />
+      </div>
+    );
 
   const TableHeader = () => (
     <thead className="border-b border-gray-300">

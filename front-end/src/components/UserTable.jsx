@@ -1,7 +1,10 @@
 import moment from "moment";
 import { getInitials } from "../utils";
+import { useSelector } from "react-redux";
 
 const UserTable = ({ users }) => {
+  const { user } = useSelector((state) => state.auth);
+
   const TableHeader = () => (
     <thead className="border-b border-gray-300 ">
       <tr className="text-black  text-left">
@@ -44,16 +47,20 @@ const UserTable = ({ users }) => {
   );
 
   return (
-    <div className="w-full md:w-1/3 bg-white h-fit px-2 md:px-6 py-4 shadow-md rounded">
-      <table className="w-full mb-5">
-        <TableHeader />
-        <tbody>
-          {users?.map((user, index) => (
-            <TableRow key={index + user?._id} user={user} />
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <>
+      {user?.isAdmin && (
+        <div className="w-full lg:w-1/3 bg-white h-fit px-2 md:px-6 py-4 shadow-md rounded">
+          <table className="w-full mb-5">
+            <TableHeader />
+            <tbody>
+              {users?.map((user, index) => (
+                <TableRow key={index + user?._id} user={user} />
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </>
   );
 };
 

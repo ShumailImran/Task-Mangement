@@ -5,6 +5,7 @@ import { GrInProgress } from "react-icons/gr";
 import {
   MdKeyboardArrowDown,
   MdKeyboardArrowUp,
+  MdKeyboardDoubleArrowDown,
   MdKeyboardDoubleArrowUp,
   MdOutlineDoneAll,
   MdOutlineMessage,
@@ -22,17 +23,11 @@ import {
 } from "../redux/slices/api/taskApiSlice";
 import { PRIORITY_STYLES, TASK_TYPE, getInitials } from "../utils";
 
-const assets = [
-  "https://images.pexels.com/photos/2418664/pexels-photo-2418664.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-  "https://images.pexels.com/photos/8797307/pexels-photo-8797307.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-  "https://images.pexels.com/photos/2534523/pexels-photo-2534523.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-  "https://images.pexels.com/photos/804049/pexels-photo-804049.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-];
-
 const ICONS = {
   high: <MdKeyboardDoubleArrowUp />,
   medium: <MdKeyboardArrowUp />,
   low: <MdKeyboardArrowDown />,
+  normal: <MdKeyboardDoubleArrowDown />,
 };
 
 const bgColor = {
@@ -150,17 +145,16 @@ function TaskDetails() {
                   <span className="text-gray-400">|</span>
                   {/* SUB-TASK */}
                   <div className="space-x-2">
-                    <span className="font-semibold">Sub-Task :</span>
+                    <span className="font-semibold ">Sub-Task :</span>
                     <span>{task?.subTasks?.length}</span>
                   </div>
                 </div>
+                {/* Description */}
 
                 {/* TEAM */}
 
                 <div className="space-y-4 py-6">
-                  <p className="text-gray-600 font-semibold text-sm">
-                    TASK TEAM
-                  </p>
+                  <p className="text-gray-600 font-medium text-sm">TASK TEAM</p>
                   <div className="space-y-3">
                     {task?.team?.map((m, index) => (
                       <div
@@ -174,7 +168,7 @@ function TaskDetails() {
                         </div>
 
                         <div>
-                          <p className="text-lg font-semibold">{m?.name}</p>
+                          <p className="text-lg font-semibold ">{m?.name}</p>
                           <span className="text-gray-500">{m?.title}</span>
                         </div>
                       </div>
@@ -215,7 +209,7 @@ function TaskDetails() {
 
               {/* --------RIGHT SIDE---------- */}
               <div className="w-full md:w-1/2 space-y-8">
-                <p className="text-lg font-semibold">ASSETS</p>
+                <p className="text-lg font-semibold font-sans">ASSETS</p>
 
                 <div className="w-full grid grid-cols-2 gap-4">
                   {task?.assets?.map((el, index) => (

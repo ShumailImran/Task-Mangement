@@ -57,7 +57,7 @@ function Dashboard() {
 
   return (
     <div className="h-full py-4 ">
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
+      <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-4 gap-5">
         {stats.map(({ icon, bg, label, total }, index) => (
           <Card key={index} icon={icon} bg={bg} label={label} count={total} />
         ))}
@@ -70,14 +70,14 @@ function Dashboard() {
         <Chart data={data?.graphData} />
       </div>
 
-      <div className="w-full flex flex-col md:flex-row gap-4 2xl:gap-10 py-8">
+      <div className="w-full flex flex-col lg:flex-row gap-4 2xl:gap-10 py-8">
         {/* /left */}
 
         <TaskTable tasks={data.last10Task} />
 
         {/* /right */}
 
-        <UserTable users={data.user} />
+        <UserTable users={data?.user} />
       </div>
     </div>
   );

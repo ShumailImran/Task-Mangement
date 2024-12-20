@@ -17,6 +17,7 @@ function AddTask({ open, setOpen, task }) {
   const defaultValues = {
     title: task?.title || "",
     date: dateFormatter(task?.date || new Date()),
+    description: task?.description || "",
     team: task?.team || [],
     stage: task?.stage || LISTS[0],
     priority: task?.priority || PRIORITY[2],
@@ -39,7 +40,6 @@ function AddTask({ open, setOpen, task }) {
 
   const submitHandler = async (data) => {
     try {
-      // Set uploading state to true when the upload starts
       setUploading(true);
 
       const formData = new FormData();
@@ -50,10 +50,9 @@ function AddTask({ open, setOpen, task }) {
       formData.append("team", JSON.stringify(team));
       assets.forEach((file) => formData.append("assets", file));
 
-      // Check if task exists (for updating) or create a new task
       const url = task?._id
-        ? `/api/tasks/update/${task._id}` // For updating
-        : `/api/tasks/create`; // For creating
+        ? `/api/tasks/update/${task._id}`
+        : `/api/tasks/create`;
 
       const response = await fetch(url, {
         method: task?._id ? "PUT" : "POST",
@@ -65,13 +64,11 @@ function AddTask({ open, setOpen, task }) {
         throw new Error(resData.message || "Something went wrong");
       }
 
-      // Set uploading state to false after the upload is completed
       setUploading(false);
 
       toast.success(resData.message);
       setOpen(false);
     } catch (error) {
-      // Set uploading state to false if there's an error
       setUploading(false);
       toast.error(error.message);
     }
@@ -115,25 +112,25 @@ function AddTask({ open, setOpen, task }) {
               />
 
               <div className="w-full">
-                <Textbox
-                  placeholder="Date"
-                  type="date"
-                  name="date"
-                  label="Task Date"
-                  className="w-full rounded"
-                  register={register("date", { required: "Date is required" })}
-                  error={errors.date ? errors.date.message : ""}
+                {/* TASK PRIORITY */}
+                <SelectList
+                  label="Priority Level"
+                  lists={PRIORITY}
+                  selected={priority}
+                  setSelected={setPriority}
                 />
               </div>
             </div>
 
             <div className="flex gap-4">
-              {/* TASK PRIORITY */}
-              <SelectList
-                label="Priority Level"
-                lists={PRIORITY}
-                selected={priority}
-                setSelected={setPriority}
+              <Textbox
+                placeholder="Date"
+                type="date"
+                name="date"
+                label="Task Date"
+                className="w-full rounded"
+                register={register("date", { required: "Date is required" })}
+                error={errors.date ? errors.date.message : ""}
               />
 
               {/* ASSETS */}

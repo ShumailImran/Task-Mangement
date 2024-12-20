@@ -27,7 +27,6 @@ const ICONS = {
 
 function Trash() {
   const [openDialog, setOpenDialog] = useState(false);
-  const [open, setOpen] = useState(false);
   const [msg, setMsg] = useState(null);
   const [type, setType] = useState("delete");
   const [selected, setSelected] = useState("");
@@ -173,33 +172,42 @@ function Trash() {
         <div className="flex items-center justify-between mb-8">
           <Title title="Trashed Tasks" />
 
-          <div className="flex gap-2 md:gap-4 items-center">
-            <Button
-              label="Restore All"
-              icon={<MdOutlineRestore className="text-lg hidden md:flex" />}
-              className="flex flex-row-reverse gap-1 items-center  text-black text-sm md:text-base rounded-md 2xl:py-2.5"
-              onClick={() => restoreAllClick()}
-            />
-            <Button
-              label="Delete All"
-              icon={<MdDelete className="text-lg hidden md:flex" />}
-              className="flex flex-row-reverse gap-1 items-center  text-red-600 text-sm md:text-base rounded-md 2xl:py-2.5"
-              onClick={() => deleteAllClick()}
-            />
-          </div>
+          {data?.task?.length > 0 && (
+            <div className="flex gap-2 md:gap-4 items-center">
+              <Button
+                label="Restore All"
+                icon={<MdOutlineRestore className="text-lg hidden md:flex" />}
+                className="flex flex-row-reverse gap-1 items-center  text-black text-sm md:text-base rounded-md 2xl:py-2.5"
+                onClick={() => restoreAllClick()}
+              />
+              <Button
+                label="Delete All"
+                icon={<MdDelete className="text-lg hidden md:flex" />}
+                className="flex flex-row-reverse gap-1 items-center  text-red-600 text-sm md:text-base rounded-md 2xl:py-2.5"
+                onClick={() => deleteAllClick()}
+              />
+            </div>
+          )}
         </div>
-        <div className="bg-white px-2 md:px-6 py-4 shadow-md rounded">
-          <div className="overflow-x-auto">
-            <table className="w-full mb-5">
-              <TableHeader />
-              <tbody>
-                {data?.tasks?.map((tk, id) => (
-                  <TableRow key={id} item={tk} />
-                ))}
-              </tbody>
-            </table>
+
+        {data?.tasks?.length > 0 ? (
+          <div className="bg-white px-2 md:px-6 py-4 shadow-md rounded">
+            <div className="overflow-x-auto">
+              <table className="w-full mb-5">
+                <TableHeader />
+                <tbody>
+                  {data?.tasks?.map((tk, id) => (
+                    <TableRow key={id} item={tk} />
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="flex justify-center mt-9">
+            <p className="text-lg text-gray-500">No Trashed Task</p>
+          </div>
+        )}
       </div>
 
       <ConfirmationDialog
