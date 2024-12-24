@@ -9,6 +9,7 @@ import SelectList from "../SelectList";
 import Textbox from "../Textbox";
 import UserList from "./UserList";
 import { dateFormatter } from "../../utils";
+import { useGetAllTaskQuery } from "../../redux/slices/api/taskApiSlice";
 
 const LISTS = ["TODO", "IN PROGRESS", "COMPLETED"];
 const PRIORITY = ["HIGH", "MEDIUM", "NORMAL", "LOW"];
@@ -37,6 +38,12 @@ function AddTask({ open, setOpen, task }) {
   );
   const [assets, setAssets] = useState(task?.assets || []);
   const [uploading, setUploading] = useState(false);
+
+  const { refetch } = useGetAllTaskQuery({
+    strQuery: status,
+    isTrashed: "",
+    search: "",
+  });
 
   const submitHandler = async (data) => {
     try {
@@ -67,6 +74,8 @@ function AddTask({ open, setOpen, task }) {
       setUploading(false);
 
       toast.success(resData.message);
+
+      refetch();
       setOpen(false);
     } catch (error) {
       setUploading(false);

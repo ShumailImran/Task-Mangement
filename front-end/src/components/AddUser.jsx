@@ -9,7 +9,7 @@ import { useRegisterMutation } from "../redux/slices/api/authApiSlice";
 import { useUpdateUserMutation } from "../redux/slices/api/userApiSlice";
 import { setCredentials } from "../redux/slices/authSlice";
 
-const AddUser = ({ open, setOpen, userData }) => {
+const AddUser = ({ open, setOpen, userData, refetch }) => {
   let defaultValues = userData ?? {};
   const { user } = useSelector((state) => state.auth);
 
@@ -29,6 +29,8 @@ const AddUser = ({ open, setOpen, userData }) => {
       if (userData) {
         const result = await updateUser(data).unwrap();
 
+        refetch();
+
         toast.success("User updated successfully");
 
         if (userData?._id === user?._id) {
@@ -41,12 +43,14 @@ const AddUser = ({ open, setOpen, userData }) => {
         }).unwrap();
 
         toast.success("New user added successfully");
+
+        refetch();
       }
       setTimeout(() => {
         setOpen(false);
       }, 1000);
     } catch (error) {
-      toast.error("Something went wrong");
+      toast.error("Something went wrong", error);
     }
   };
 

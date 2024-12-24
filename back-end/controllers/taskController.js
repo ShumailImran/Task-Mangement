@@ -35,9 +35,7 @@ export const createTask = async (req, res) => {
     // Initialize assets array to store Cloudinary URLs
     let assets = [];
 
-    // If files are uploaded, process them and upload to Cloudinary
     if (req.files) {
-      // Use Promise.all to upload files before proceeding
       const uploadPromises = req.files.map((file) => {
         return new Promise((resolve, reject) => {
           cloudinary.uploader

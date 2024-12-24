@@ -171,6 +171,7 @@ function Users() {
         open={open}
         setOpen={setOpen}
         userData={selected}
+        refetch={refetch}
         key={new Date().getTime().toString()}
       />
 
