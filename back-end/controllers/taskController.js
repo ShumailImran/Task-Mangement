@@ -5,7 +5,6 @@ import { v2 as cloudinary } from "cloudinary";
 import mongoose from "mongoose";
 
 // // // // CREATE_TASK // // // // //
-
 export const createTask = async (req, res) => {
   try {
     const { userId } = req.user;

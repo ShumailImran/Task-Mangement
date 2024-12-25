@@ -62,7 +62,7 @@ function Table({ tasks }) {
 
   const TableHeader = () => (
     <thead className="w-full border-b border-gray-300">
-      <tr className="w-full text-black  text-left">
+      <tr className="w-full text-black text-left">
         <th className="py-2">Task Title</th>
         <th className="py-2">Priority</th>
         <th className="py-2 line-clamp-1">Created At</th>
@@ -162,8 +162,8 @@ function Table({ tasks }) {
   return (
     <>
       <div className="bg-white px-2 md:px-4 pt-4 pb-9 shadow-md rounded">
-        <div className="overflow-x-auto">
-          <table className="w-full ">
+        <div className="overflow-hidden md:overflow-x-auto">
+          <table className="w-full table-auto">
             <TableHeader />
             <tbody>
               {tasks.map((task, index) => (

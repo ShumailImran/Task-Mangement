@@ -1,7 +1,6 @@
 import { Listbox, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useState } from "react";
 import { BsChevronExpand } from "react-icons/bs";
-import clsx from "clsx";
 import { getInitials } from "../../utils";
 import { MdCheck } from "react-icons/md";
 import { useGetTeamListQuery } from "../../redux/slices/api/userApiSlice";
@@ -65,10 +64,9 @@ const UserList = ({ setTeam, team }) => {
                   {({ selected }) => (
                     <>
                       <div
-                        className={clsx(
-                          "flex items-center gap-2 truncate",
+                        className={`flex items-center gap-2 truncate ${
                           selected ? "font-medium" : "font-normal"
-                        )}
+                        }`}
                       >
                         <div className="w-6 h-6 rounded-full text-white flex items-center justify-center bg-violet-600">
                           <span className="text-center text-[10px]">

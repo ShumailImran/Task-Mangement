@@ -12,6 +12,7 @@ import {
 } from "../redux/slices/api/userApiSlice";
 import { toast } from "sonner";
 import Loader from "../components/Loader";
+import { MdDelete, MdEdit } from "react-icons/md";
 
 function Users() {
   const [openDialog, setOpenDialog] = useState(false);
@@ -99,7 +100,7 @@ function Users() {
     <tr className="border-b border-gray-200 text-gray-600 hover:bg-gray-400/10">
       <td className="py-2">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-full text-white flex items-center justify-center text-sm bg-blue-700">
+          <div className="w-7 h-7 rounded-full text-white flex items-center justify-center text-sm bg-blue-700">
             <span className="text-xs ms:text-sm text-center">
               {getInitials(user?.name)}
             </span>
@@ -126,14 +127,16 @@ function Users() {
       <td className="p-2 flex gap-4 justify-end">
         <Button
           className="text-blue-600 hover:text-blue-500 font-semibold sm:px-0"
-          label="Edit"
+          // label="Edit"
+          icon={<MdEdit className="text-lg " />}
           type="button"
           onClick={() => editClick(user)}
         />
 
         <Button
           className="text-red-700 hover:text-red-500 font-semibold sm:px-0"
-          label="Delete"
+          // label="Delete"
+          icon={<MdDelete className="text-lg " />}
           onClick={() => deleteClick(user?._id)}
         />
       </td>

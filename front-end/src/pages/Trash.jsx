@@ -172,7 +172,7 @@ function Trash() {
         <div className="flex items-center justify-between mb-8">
           <Title title="Trashed Tasks" />
 
-          {data?.task?.length > 0 && (
+          {data?.tasks?.length > 0 && (
             <div className="flex gap-2 md:gap-4 items-center">
               <Button
                 label="Restore All"

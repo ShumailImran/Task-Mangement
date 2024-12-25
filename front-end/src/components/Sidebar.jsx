@@ -3,7 +3,6 @@ import {
   MdDashboard,
   MdOutlineAddTask,
   MdOutlinePendingActions,
-  MdSettings,
   MdTaskAlt,
 } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
@@ -65,12 +64,6 @@ const Sidebar = () => {
           </Link>
         ))}
       </div>
-
-      {/* Settings Button */}
-      <button className="flex items-center gap-3 text-lg text-gray-800">
-        <MdSettings />
-        <span>Settings</span>
-      </button>
     </div>
   );
 };
