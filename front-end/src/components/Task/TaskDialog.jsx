@@ -103,14 +103,14 @@ const TaskDialog = ({ task, isAdmin }) => {
           {/* Dropdown trigger */}
           <button
             onClick={() => setMenuOpen((prev) => !prev)}
-            className="inline-flex justify-center rounded-md px-4 py-2 text-sm font-medium text-gray-600"
+            className="inline-flex justify-center rounded-md px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-200"
           >
             <BsThreeDots />
           </button>
 
           {/* Dropdown menu */}
           <div
-            className={`absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none transform transition-all ${
+            className={`absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 dark:divide-gray-800 rounded-md bg-white dark:bg-[#121212] shadow-lg ring-1 ring-black/5 focus:outline-none transform transition-all ${
               menuOpen
                 ? "opacity-100 scale-100 visible"
                 : "opacity-0 scale-95 invisible"
@@ -126,8 +126,8 @@ const TaskDialog = ({ task, isAdmin }) => {
                   }}
                   className={`flex items-center w-full px-2 py-2 text-sm rounded-md transition-colors z-10 ${
                     el.enabled
-                      ? "text-gray-900 hover:bg-blue-500 hover:text-white"
-                      : "text-gray-400 cursor-not-allowed"
+                      ? "text-gray-900 dark:text-gray-300 hover:bg-blue-500 hover:text-white "
+                      : "text-gray-400 dark:text-gray-700 cursor-not-allowed"
                   }`}
                   disabled={!el.enabled}
                 >

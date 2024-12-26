@@ -117,8 +117,8 @@ function Trash() {
     );
 
   const TableHeader = () => (
-    <thead className="border-b border-gray-300">
-      <tr className="text-black  text-left">
+    <thead className="border-b border-gray-300 dark:border-gray-600">
+      <tr className=" text-left">
         <th className="py-2">Task Title</th>
         <th className="py-2">Priority</th>
         <th className="py-2">Stage</th>
@@ -128,14 +128,12 @@ function Trash() {
   );
 
   const TableRow = ({ item }) => (
-    <tr className="border-b border-gray-200 text-gray-600 hover:bg-gray-400/10">
+    <tr className="border-b border-gray-200 dark:border-gray-600 hover:bg-gray-400/10">
       <td className="py-2">
         <div className="flex items-center gap-2">
           <div className={`w-4 h-4 rounded-full ${TASK_TYPE[item.stage]}`} />
 
-          <p className="w-full line-clamp-2 text-base text-black">
-            {item?.title}
-          </p>
+          <p className="w-full line-clamp-2 text-base ">{item?.title}</p>
         </div>
       </td>
 
@@ -177,7 +175,7 @@ function Trash() {
               <Button
                 label="Restore All"
                 icon={<MdOutlineRestore className="text-lg hidden md:flex" />}
-                className="flex flex-row-reverse gap-1 items-center  text-black text-sm md:text-base rounded-md 2xl:py-2.5"
+                className="flex flex-row-reverse gap-1 items-center  text-gray-600 dark:text-gray-300 text-sm md:text-base rounded-md 2xl:py-2.5"
                 onClick={() => restoreAllClick()}
               />
               <Button
@@ -191,7 +189,7 @@ function Trash() {
         </div>
 
         {data?.tasks?.length > 0 ? (
-          <div className="bg-white px-2 md:px-6 py-4 shadow-md rounded">
+          <div className="bg-white dark:bg-[#121212] dark:text-gray-300 px-2 md:px-6 py-4 shadow-md rounded">
             <div className="overflow-x-auto">
               <table className="w-full mb-5">
                 <TableHeader />
@@ -205,7 +203,7 @@ function Trash() {
           </div>
         ) : (
           <div className="flex justify-center mt-9">
-            <p className="text-lg text-gray-500">No Trashed Task</p>
+            <p className="text-lg ">No Trashed Task</p>
           </div>
         )}
       </div>

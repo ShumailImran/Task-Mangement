@@ -39,11 +39,11 @@ function ModalWrapper({ open, setOpen, children }) {
 
       {/* Modal Panel */}
       <div
-        className="relative w-full max-w-lg transform overflow-hidden rounded-lg bg-white shadow-xl transition-all sm:my-8"
+        className="relative w-full max-w-lg transform overflow-hidden rounded-lg bg-white dark:bg-[#121212] shadow-xl transition-all sm:my-8"
         role="document"
         aria-labelledby="modal-title"
       >
-        <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+        <div className="bg-white dark:bg-[#121212] px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
           <div className="sm:flex sm:items-start">
             {/* Modal Content */}
             <div
@@ -58,7 +58,7 @@ function ModalWrapper({ open, setOpen, children }) {
         {/* Close Button */}
         <button
           onClick={() => setOpen(false)}
-          className="absolute top-2 right-2 text-gray-400 hover:text-gray-600"
+          className="absolute top-2 right-2 text-gray-400  dark:hover:text-gray-200 hover:text-gray-600"
           aria-label="Close modal"
         >
           ×

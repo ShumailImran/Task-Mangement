@@ -37,13 +37,13 @@ const MobileSidebar = () => {
       onClick={closeSidebar}
     >
       <div
-        className={`bg-white w-3/4 h-full shadow-lg transform transition-transform duration-300 ease-in-out ${
+        className={`bg-white dark:bg-[#121212] w-3/4 h-full shadow-lg transform transition-transform duration-300 ease-in-out ${
           isSidebarOpen && !closing ? "translate-x-0" : "-translate-x-full"
         }`}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}
-        <div className="flex justify-end p-4">
+        <div className="flex justify-end p-4 dark:text-gray-100">
           <button onClick={closeSidebar}>
             <IoClose size={25} />
           </button>

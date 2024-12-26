@@ -61,26 +61,24 @@ function Table({ tasks }) {
   };
 
   const TableHeader = () => (
-    <thead className="w-full border-b border-gray-300">
-      <tr className="w-full text-black text-left">
+    <thead className="w-full border-b border-gray-300 dark:border-gray-600">
+      <tr className="w-full text-black dark:text-white text-left">
         <th className="py-2">Task Title</th>
         <th className="py-2">Priority</th>
         <th className="py-2 line-clamp-1">Created At</th>
-        <th className="py-2">Assets</th>
+        {/* <th className="py-2">Assets</th> */}
         <th className="py-2">Team</th>
       </tr>
     </thead>
   );
 
   const TableRow = ({ task }) => (
-    <tr className="border-b border-gray-300 text-gray-600 hover:bg-gray-300/10">
+    <tr className="border-b border-gray-300 text-gray-600 dark:text-gray-300 hover:bg-gray-300/10 dark:hover:bg-gray-700/10">
       {/* TITLE */}
       <td className="py-2">
         <div className="flex items-center gap-1">
           <div className={`w-4 h-4 rounded-full ${TASK_TYPE[task.stage]}`} />
-          <p className="w-full line-clamp-2 text-base text-black">
-            {task?.title}
-          </p>
+          <p className="w-full line-clamp-2 text-base ">{task?.title}</p>
         </div>
       </td>
 
@@ -90,37 +88,35 @@ function Table({ tasks }) {
           <span className={`text-lg ${PRIORITY_STYLES[task?.priority]}`}>
             {ICONS[task?.priority]}
           </span>
-          <span className="capitalize line-clamp-1">{task?.priority}</span>
+          <span className="capitalize line-clamp-1 ">{task?.priority}</span>
         </div>
       </td>
 
       {/* CREATED AT */}
       <td className="py-2">
-        <span className="text-sm text-gray-600">
-          {formatDate(new Date(task?.date))}
-        </span>
+        <span className="text-sm text">{formatDate(new Date(task?.date))}</span>
       </td>
 
       {/* ASSETS */}
 
-      <td className="py-2">
+      {/* <td className="py-2">
         <div className="flex items-center gap-3">
-          <div className="flex gap-1 items-center text-sm text-gray-600">
+          <div className="flex gap-1 items-center text-sm ">
             <BiMessageAltDetail />
             <span>{task?.activities?.length}</span>
           </div>
 
-          <div className="flex gap-1 items-center text-sm text-gray-600">
+          <div className="flex gap-1 items-center text-sm ">
             <MdAttachFile />
             <span>{task?.assets?.length}</span>
           </div>
 
-          <div className="flex gap-1 items-center text-sm text-gray-600">
+          <div className="flex gap-1 items-center text-sm ">
             <FaList />
             <span>{task?.subTasks?.length}</span>
           </div>
         </div>
-      </td>
+      </td> */}
 
       {/* TEAM */}
 
@@ -161,7 +157,7 @@ function Table({ tasks }) {
 
   return (
     <>
-      <div className="bg-white px-2 md:px-4 pt-4 pb-9 shadow-md rounded">
+      <div className="bg-white dark:bg-[#121212] px-2 md:px-4 pt-4 pb-9 shadow-md rounded">
         <div className="overflow-hidden md:overflow-x-auto">
           <table className="w-full table-auto">
             <TableHeader />

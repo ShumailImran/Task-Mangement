@@ -63,8 +63,8 @@ function Dashboard() {
         ))}
       </div>
 
-      <div className="w-full bg-white my-16 p-4 rounded shadow-sm">
-        <h4 className="text-xl text-gray-600 font-semibold">
+      <div className="w-full bg-white dark:bg-[#121212] my-16 p-4 rounded shadow-sm">
+        <h4 className="text-xl text-gray-600 dark:text-gray-300 font-semibold">
           Charts By Priority
         </h4>
         <Chart data={data?.graphData} />

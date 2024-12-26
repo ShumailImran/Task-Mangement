@@ -6,11 +6,11 @@ import { MdCheck } from "react-icons/md";
 const SelectList = ({ lists, selected, setSelected, label }) => {
   return (
     <div className="w-full">
-      {label && <p className="text-slate-900 dark:text-gray-500">{label}</p>}
+      {label && <p className="text-slate-900 dark:text-gray-300 ">{label}</p>}
 
       <Listbox value={selected} onChange={setSelected}>
         <div className="relative mt-1">
-          <Listbox.Button className="relative w-full cursor-default rounded bg-white pl-3 pr-10 text-left px-3 py-2.5 2xl:py-3 border border-gray-300 sm:text-sm">
+          <Listbox.Button className="relative w-full cursor-default rounded bg-white dark:bg-[#121212] dark:text-gray-300 pl-3 pr-10 text-left px-3 py-2.5 2xl:py-3 border border-gray-300 sm:text-sm">
             <span className="block truncate">{selected}</span>
             <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
               <BsChevronExpand
@@ -25,13 +25,15 @@ const SelectList = ({ lists, selected, setSelected, label }) => {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Listbox.Options className="z-50 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+            <Listbox.Options className="z-50 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white dark:bg-[#121212] py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
               {lists.map((list, index) => (
                 <Listbox.Option
                   key={index}
                   className={({ active }) =>
                     `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                      active ? "bg-amber-100 text-amber-900" : "text-gray-900"
+                      active
+                        ? "bg-amber-100 text-amber-900"
+                        : "text-gray-900 dark:text-gray-300"
                     }`
                   }
                   value={list}

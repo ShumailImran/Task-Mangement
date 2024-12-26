@@ -33,14 +33,14 @@ export default function ConfirmationDialog({
             </p>
           </h3>
 
-          <p className="text-center text-gray-500">
+          <p className="text-center text-gray-500 dark:text-gray-200">
             {msg ?? "Are you sure you want to delete the selected record?"}
           </p>
 
-          <div className="bg-gray-50 py-3 sm:flex sm:flex-row-reverse gap-4">
+          <div className="bg-gray-50 dark:bg-[#121212] py-3 flex flex-row-reverse gap-4">
             <Button
               type="button"
-              className="bg-white px-8 text-sm font-semibold text-gray-900 sm:w-auto border"
+              className="bg-white dark:bg-[#121212] px-8 text-sm font-semibold text-gray-900 dark:text-gray-200 sm:w-auto border border-gray-700"
               onClick={() => closeDialog()}
               label="Cancel"
             />
@@ -53,7 +53,11 @@ export default function ConfirmationDialog({
                   : "bg-red-600 hover:bg-red-500"
               }`}
               onClick={onClick}
-              label={type === "restore" ? "Restore" : "Delete"}
+              label={
+                type === "restore" || type === "restoreAll"
+                  ? "Restore"
+                  : "Delete"
+              }
             />
           </div>
         </div>
@@ -81,7 +85,7 @@ export function UserAction({ open, setOpen, onClick = () => {} }) {
             {"Are you sure you want to activate or deactive this account?"}
           </p>
 
-          <div className="bg-gray-50 py-3 sm:flex sm:flex-row-reverse gap-4">
+          <div className=" py-3 flex flex-row-reverse gap-4">
             <Button
               type="button"
               className="bg-white px-8 text-sm font-semibold text-gray-900 sm:w-auto border"

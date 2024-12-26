@@ -58,16 +58,16 @@ const AddUser = ({ open, setOpen, userData, refetch }) => {
     <>
       <ModalWrapper open={open} setOpen={setOpen}>
         <form onSubmit={handleSubmit(handleOnSubmit)} className="">
-          <h2 className="text-base font-bold leading-6 text-gray-900 mb-4">
+          <h2 className="text-base font-bold leading-6 text-gray-900 dark:text-gray-300 mb-4">
             {userData ? "UPDATE PROFILE" : "ADD NEW USER"}
           </h2>
-          <div className="mt-2 flex flex-col gap-6">
+          <div className="mt-2 flex flex-col gap-6 ">
             <Textbox
               placeholder="Full name"
               type="text"
               name="name"
               label="Full Name"
-              className="w-full rounded"
+              className="w-full rounded "
               register={register("name", {
                 required: "Full name is required!",
               })}
@@ -78,7 +78,7 @@ const AddUser = ({ open, setOpen, userData, refetch }) => {
               type="text"
               name="title"
               label="Title"
-              className="w-full rounded"
+              className="w-full rounded "
               register={register("title", {
                 required: "Title is required!",
               })}
@@ -101,7 +101,7 @@ const AddUser = ({ open, setOpen, userData, refetch }) => {
               type="text"
               name="role"
               label="Role"
-              className="w-full rounded"
+              className="w-full rounded "
               register={register("role", {
                 required: "User role is required!",
               })}
@@ -114,18 +114,18 @@ const AddUser = ({ open, setOpen, userData, refetch }) => {
               <Loader />
             </div>
           ) : (
-            <div className="py-3 mt-4 sm:flex sm:flex-row-reverse">
+            <div className="py-3 mt-4 flex flex-row-reverse">
+              <Button
+                type="button"
+                className="bg-white px-8 text-sm font-semibold text-gray-900 sm:w-auto"
+                onClick={() => setOpen(false)}
+                label="Cancel"
+              />
+
               <Button
                 type="submit"
                 className="bg-blue-600 px-8 text-sm font-semibold text-white hover:bg-blue-700  sm:w-auto"
                 label="Submit"
-              />
-
-              <Button
-                type="button"
-                className="bg-white px-5 text-sm font-semibold text-gray-900 sm:w-auto"
-                onClick={() => setOpen(false)}
-                label="Cancel"
               />
             </div>
           )}

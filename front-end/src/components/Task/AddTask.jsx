@@ -68,11 +68,16 @@ function AddTask({ open, setOpen, task, refetch }) {
 
       toast.success(resData.message);
 
-      refetch();
+      if (refetch) {
+        refetch();
+      } else {
+        window.location.reload();
+      }
       setOpen(false);
     } catch (error) {
       setUploading(false);
       toast.error(error.message);
+      console.log(error);
     }
   };
 
@@ -85,7 +90,7 @@ function AddTask({ open, setOpen, task, refetch }) {
     <>
       <ModalWrapper open={open} setOpen={setOpen}>
         <form onSubmit={handleSubmit(submitHandler)}>
-          <h2 className="text-base font-bold leading-6 text-gray-900 mb-4">
+          <h2 className="text-base font-bold leading-6 text-gray-900 dark:text-gray-300 mb-4">
             {task ? "UPDATE TASK" : "ADD TASK"}
           </h2>
 
@@ -96,7 +101,7 @@ function AddTask({ open, setOpen, task, refetch }) {
               type="text"
               name="title"
               label="Task Title"
-              className="w-full rounded"
+              className="w-full rounded text-gray-300"
               register={register("title", { required: "Title is required" })}
               error={errors.title ? errors.title.message : null}
             />
@@ -130,7 +135,7 @@ function AddTask({ open, setOpen, task, refetch }) {
                 type="date"
                 name="date"
                 label="Task Date"
-                className="w-full rounded"
+                className="w-full rounded dark:text-gray-300"
                 register={register("date", { required: "Date is required" })}
                 error={errors.date ? errors.date.message : ""}
               />
@@ -139,7 +144,7 @@ function AddTask({ open, setOpen, task, refetch }) {
               <div className="w-full flex items-center justify-center mt-4">
                 <label
                   htmlFor="imgUpload"
-                  className="flex items-center gap-1 text-base text-ascent-2 hover:text-ascent-1 cursor-pointer my-4"
+                  className="dark:text-gray-300 flex items-center gap-1 text-base text-ascent-2 hover:text-ascent-1 cursor-pointer my-4"
                 >
                   <input
                     type="file"
@@ -155,7 +160,15 @@ function AddTask({ open, setOpen, task, refetch }) {
               </div>
             </div>
 
-            <div className="bg-gray-50 py-6 sm:flex sm:flex-row-reverse gap-4">
+            <div className="bg-gray-50 dark:bg-[#121212] py-6 flex flex-row-reverse gap-4">
+              {/* CANCEL */}
+              <Button
+                label="Cancel"
+                type="button"
+                className="bg-white px-5 text-sm font-semibold text-gray-900 sm:w-auto"
+                onClick={() => setOpen(false)}
+              />
+
               {uploading ? (
                 <span className="text-sm py-2 text-red-500">
                   Uploading Assets
@@ -171,14 +184,6 @@ function AddTask({ open, setOpen, task, refetch }) {
                   Save
                 </Button>
               )}
-
-              {/* CANCEL */}
-              <Button
-                label="Cancel"
-                type="button"
-                className="bg-white px-5 text-sm font-semibold text-gray-900 sm:w-auto"
-                onClick={() => setOpen(false)}
-              />
             </div>
           </div>
         </form>

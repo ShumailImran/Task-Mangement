@@ -17,8 +17,8 @@ const TaskTable = ({ tasks }) => {
   };
 
   const TableHeader = () => (
-    <thead className="border-b border-gray-300">
-      <tr className="w-full text-black text-left">
+    <thead className="border-b border-gray-300 dark:text-gray-600">
+      <tr className="w-full text-black dark:text-white text-left">
         <th className="py-2">Task Title</th>
         <th className="py-2">Priority</th>
         <th className="py-2">Team</th>
@@ -28,12 +28,12 @@ const TaskTable = ({ tasks }) => {
   );
 
   const TableRow = ({ task }) => (
-    <tr className=" border-b border-gray-300 text-gray-600 hover:bg-gray-300/10 ">
+    <tr className=" border-b border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:bg-gray-300/10 dark:hover:bg-gray-700/10 ">
       <td className=" py-2">
         <div className="flex items-center gap-2">
           <div className={`w-4 h-4 rounded-full ${TASK_TYPE[task.stage]}`} />
 
-          <p className="text-base text-black">{task.title}</p>
+          <p className="text-base text-black dark:text-white">{task.title}</p>
         </div>
       </td>
 
@@ -51,7 +51,7 @@ const TaskTable = ({ tasks }) => {
           {task.team.map((m, index) => (
             <div
               key={index}
-              className={`w-7 h-7 rounded-full text-white flex items-center justify-center text-sm -mr-1
+              className={`w-7 h-7 rounded-full text-white dark:text-[#121212] flex items-center justify-center text-sm -mr-1
                 ${BGS[index % BGS.length]}`}
             >
               <UserInfo user={m} />
@@ -70,7 +70,7 @@ const TaskTable = ({ tasks }) => {
 
   return (
     <>
-      <div className="w-full lg:w-2/3 bg-white px-2 md:px-4 pt-4 pb-4 shadow-md rounded">
+      <div className="w-full lg:w-2/3 bg-white dark:bg-[#121212] px-2 md:px-4 pt-4 pb-4 shadow-md rounded">
         <table className="w-full">
           <TableHeader />
           <tbody>

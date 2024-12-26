@@ -19,7 +19,7 @@ const TABS = [
 ];
 
 const TASK_TYPE = {
-  todo: "bg-blue-600",
+  todo: "bg-blue-600 dark:bg-blue-500",
   "in progress": "bg-yellow-600",
   completed: "bg-green-600",
 };

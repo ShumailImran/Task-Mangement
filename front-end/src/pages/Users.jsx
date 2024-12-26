@@ -85,8 +85,8 @@ function Users() {
     );
 
   const TableHeader = () => (
-    <thead className="border-b border-gray-300">
-      <tr className=" text-black text-left">
+    <thead className="border-b ">
+      <tr className="text-left">
         <th className="py-2">Full Name</th>
         <th className="py-2">Title</th>
         <th className="py-2">Email</th>
@@ -97,11 +97,11 @@ function Users() {
   );
 
   const TableRow = ({ user }) => (
-    <tr className="border-b border-gray-200 text-gray-600 hover:bg-gray-400/10">
+    <tr className="border-b  hover:bg-gray-400/10 dark:hover:bg-gray-700/50">
       <td className="py-2">
         <div className="flex items-center gap-3">
-          <div className="w-7 h-7 rounded-full text-white flex items-center justify-center text-sm bg-blue-700">
-            <span className="text-xs ms:text-sm text-center">
+          <div className="w-7 h-7 rounded-full  flex items-center justify-center text-sm bg-blue-700">
+            <span className="text-xs text-white ms:text-sm text-center">
               {getInitials(user?.name)}
             </span>
           </div>
@@ -117,7 +117,9 @@ function Users() {
         <button
           onClick={() => userStatusClick(user)}
           className={`w-fit px-4 py-1 rounded-full ${
-            user?.isActive ? "bg-blue-200" : "bg-yellow-100"
+            user?.isActive
+              ? "bg-blue-200 text-gray-600"
+              : "bg-yellow-100 text-gray-600"
           }`}
         >
           {user?.isActive ? "Active" : "Disabled"}
@@ -156,7 +158,7 @@ function Users() {
           />
         </div>
 
-        <div className="bg-white px-2 md:px-4 py-4 shadow-sm">
+        <div className="bg-white dark:bg-[#121212] dark:text-gray-300 px-2 md:px-4 py-4 border-gray-300 dark:border-gray-600 shadow-sm">
           <div className="overflow-x-auto">
             <table className="w-full mb-5">
               <TableHeader />

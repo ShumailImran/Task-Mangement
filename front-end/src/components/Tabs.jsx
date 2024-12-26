@@ -15,11 +15,11 @@ export default function Tabs({ tabs, setSelected, children }) {
               onClick={() => setSelected(index)}
               className={({ selected }) =>
                 classNames(
-                  "w-fit flex items-center outline-none gap-2 px-3 py-2.5 text-base font-medium leading-5 bg-white",
+                  "w-fit flex items-center outline-none gap-2 px-3 py-2.5 text-base font-medium leading-5 bg-white dark:bg-[#121212]",
 
                   selected
-                    ? "text-blue-700  border-b-2 border-blue-600"
-                    : "text-gray-800  hover:text-blue-800"
+                    ? "text-blue-700 dark:text-blue-400  border-b-2 border-blue-600 dark:border-blue-400"
+                    : "text-gray-800 dark:text-gray-400  hover:text-blue-800 dark:hover:text-blue-400"
                 )
               }
             >

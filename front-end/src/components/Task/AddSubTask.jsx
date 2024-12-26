@@ -36,7 +36,7 @@ function AddSubTask({ open, setOpen, id }) {
     <>
       <ModalWrapper open={open} setOpen={setOpen}>
         <form onSubmit={handleSubmit(handleOnSubmit)}>
-          <h2 className="text-lg font-semibold leading-6 text-gray-900 mb-4">
+          <h2 className="text-lg font-semibold leading-6 text-gray-900 dark:text-gray-300 mb-4">
             Add Sub Task
           </h2>
 
@@ -45,7 +45,7 @@ function AddSubTask({ open, setOpen, id }) {
               placeholder="Sub-Task Title"
               type="text"
               name="title"
-              className="w-full rounded"
+              className="w-full rounded dark:text-gray-200"
               register={register("title", { required: "Title is required" })}
               errors={errors.title ? errors.title.message : null}
             />
@@ -56,7 +56,7 @@ function AddSubTask({ open, setOpen, id }) {
                 type="date"
                 name="date"
                 label="Task Date"
-                className="w-full rounded"
+                className="w-full rounded dark:text-gray-200"
                 register={register("date", {
                   required: "Date is required!",
                 })}
@@ -67,7 +67,7 @@ function AddSubTask({ open, setOpen, id }) {
                 type="text"
                 name="tag"
                 label="Tag"
-                className="w-full rounded"
+                className="w-full rounded dark:text-gray-200"
                 register={register("tag", {
                   required: "Tag is required!",
                 })}

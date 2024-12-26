@@ -37,7 +37,7 @@ function ChangePassword({ open, setOpen }) {
     <>
       <ModalWrapper open={open} setOpen={setOpen}>
         <form onSubmit={handleSubmit(handleOnSubmit)} className="">
-          <h2 className="text-base font-bold leading-6 text-gray-900 mb-4">
+          <h2 className="text-base font-bold leading-6 text-gray-900 dark:text-gray-200 mb-4">
             Change Password
           </h2>
 
@@ -76,12 +76,12 @@ function ChangePassword({ open, setOpen }) {
               <Button
                 type="submit"
                 label="Save"
-                className="bg-blue-600 px-8 text-sm font-semibold text-white hover:bg-blue-700"
+                className="bg-blue-600 px-8 text-sm font-semibold text-white  hover:bg-blue-700"
               />
 
               <button
                 type="button"
-                className="bg-white px-5 text-sm font-semibold text-gray-900 sm:w-auto"
+                className="bg-white dark:bg-[#121212] px-5 text-sm font-semibold text-gray-900 dark:text-gray-200 sm:w-auto"
               >
                 Cancel
               </button>

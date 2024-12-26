@@ -41,9 +41,9 @@ const Sidebar = () => {
       {/* Header */}
       <div className="flex items-center gap-2">
         <div className="bg-blue-600 p-2 rounded-full">
-          <MdOutlineAddTask className="text-white text-2xl" />
+          <MdOutlineAddTask className="text-white  text-2xl" />
         </div>
-        <h1 className="text-2xl font-bold">TaskMe</h1>
+        <h1 className="text-2xl font-bold dark:text-white">TaskMe</h1>
       </div>
 
       {/* Navigation Links */}
@@ -55,8 +55,8 @@ const Sidebar = () => {
             onClick={closeSidebar}
             className={`flex items-center gap-3 px-3 py-2 rounded-full text-base ${
               currentPath === link.split("/")[0]
-                ? "bg-blue-700 text-white"
-                : "text-gray-800 hover:bg-blue-100"
+                ? "bg-blue-700 text-white dark:text-[#121212]"
+                : "text-gray-800 dark:text-gray-200 hover:dark:text-[#121212] hover:bg-blue-100"
             }`}
           >
             {icon}

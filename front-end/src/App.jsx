@@ -10,21 +10,22 @@ import Users from "./pages/Users";
 import { useSelector } from "react-redux";
 import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
+import { useEffect, useState } from "react";
 
-function Layout() {
+function Layout({ toggleDarkMode, darkMode }) {
   const { user } = useSelector((state) => state.auth);
 
   const location = useLocation();
 
   return user ? (
     <div className=" w-full h-screen flex flex-col md:flex-row">
-      <div className="w-1/5 h-screen bg-white sticky top-0 hidden md:block">
+      <div className="w-1/5 h-screen bg-white dark:bg-[#121212] sticky top-0 hidden md:block">
         <Sidebar />
       </div>
 
       <MobileSidebar />
       <div className="flex-1 overflow-y-auto">
-        <Navbar />
+        <Navbar toggleDarkMode={toggleDarkMode} darkMode={darkMode} />
 
         <div className="p-4 2xl:px-10">
           <Outlet />
@@ -37,10 +38,35 @@ function Layout() {
 }
 
 function App() {
+  const [darkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    const savedMode = localStorage.getItem("darkMode");
+    if (savedMode === "true") {
+      setDarkMode(true);
+      document.documentElement.classList.add("dark");
+    }
+  }, []);
+
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+
+    if (darkMode) {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("darkMode", "false");
+    } else {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("darkMode", "true");
+    }
+  };
   return (
-    <main className="w-full min-h-screen bg-[#f3f4f6]">
+    <main className="w-full min-h-screen bg-[#f3f4f6] dark:bg-[#1f1f1f]">
       <Routes>
-        <Route element={<Layout />}>
+        <Route
+          element={
+            <Layout toggleDarkMode={toggleDarkMode} darkMode={darkMode} />
+          }
+        >
           <Route path="/" element={<Navigate to="/dashboard" />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/tasks" element={<Tasks />} />
