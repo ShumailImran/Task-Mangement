@@ -203,7 +203,7 @@ function Trash() {
           </div>
         ) : (
           <div className="flex justify-center mt-9">
-            <p className="text-lg ">No Trashed Task</p>
+            <p className="text-lg dark:text-gray-300">No Trashed Task</p>
           </div>
         )}
       </div>
