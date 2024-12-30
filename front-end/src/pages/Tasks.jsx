@@ -65,7 +65,7 @@ function Tasks() {
               label="In Progress"
               className={TASK_TYPE["in progress"]}
             />
-            <TaskTitle label="completed" className={TASK_TYPE.completed} />
+            <TaskTitle label="Completed" className={TASK_TYPE.completed} />
           </div>
         )}
 

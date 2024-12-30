@@ -1,4 +1,6 @@
-import { FaTasks, FaTrashAlt, FaUsers } from "react-icons/fa";
+import { FaRegTrashAlt, FaTasks } from "react-icons/fa";
+import { LuUsers } from "react-icons/lu";
+
 import {
   MdDashboard,
   MdOutlineAddTask,
@@ -19,8 +21,8 @@ const linkData = [
     icon: <MdOutlinePendingActions />,
   },
   { label: "To Do", link: "todo/todo", icon: <MdOutlinePendingActions /> },
-  { label: "Team", link: "team", icon: <FaUsers /> },
-  { label: "Trash", link: "trashed", icon: <FaTrashAlt /> },
+  { label: "Team", link: "team", icon: <LuUsers /> },
+  { label: "Trash", link: "trashed", icon: <FaRegTrashAlt /> },
 ];
 
 const Sidebar = () => {
@@ -55,7 +57,7 @@ const Sidebar = () => {
             onClick={closeSidebar}
             className={`flex items-center gap-3 px-3 py-2 rounded-full text-base ${
               currentPath === link.split("/")[0]
-                ? "bg-blue-700 text-white dark:text-[#121212]"
+                ? "bg-blue-700 text-white "
                 : "text-gray-800 dark:text-gray-200 hover:dark:text-[#121212] hover:bg-blue-100"
             }`}
           >

@@ -44,13 +44,13 @@ const NotificationPanel = () => {
   };
 
   const callsToAction = [
-    { name: "Cancel", href: "#", icon: "", onClick: () => setOpen(false) },
     {
       name: "Mark All Read",
       href: "#",
       icon: "",
       onClick: (closePopover) => readHandler("all", "", closePopover),
     },
+    { name: "Cancel", href: "#", icon: "", onClick: () => setOpen(false) },
   ];
 
   return (
@@ -60,7 +60,7 @@ const NotificationPanel = () => {
           <div className="w-8 h-8 flex items-center justify-center text-gray-800 dark:text-gray-300 relative">
             <IoIosNotificationsOutline className="text-2xl" />
             {data?.notification?.length > 0 && (
-              <span className="absolute text-center top-0 right-1 text-sm text-white  font-semibold w-4 h-4 rounded-full bg-red-600">
+              <span className="flex items-center justify-center absolute text-center top-0 right-1 text-[8px] text-white  font-semibold w-3.5 h-3.5 rounded-full bg-red-600">
                 {data.notification.length}
               </span>
             )}

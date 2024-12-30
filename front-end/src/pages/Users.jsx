@@ -101,7 +101,7 @@ function Users() {
       <td className="py-2">
         <div className="flex items-center gap-3">
           <div className="w-7 h-7 rounded-full  flex items-center justify-center text-sm bg-blue-700">
-            <span className="text-xs text-white ms:text-sm text-center">
+            <span className="text-xs text-white font-semibold ms:text-sm text-center">
               {getInitials(user?.name)}
             </span>
           </div>
@@ -118,8 +118,8 @@ function Users() {
           onClick={() => userStatusClick(user)}
           className={`w-fit px-4 py-1 rounded-full ${
             user?.isActive
-              ? "bg-blue-200 text-gray-600"
-              : "bg-yellow-100 text-gray-600"
+              ? "bg-blue-600 text-gray-200"
+              : "bg-yellow-600 text-gray-200"
           }`}
         >
           {user?.isActive ? "Active" : "Disabled"}

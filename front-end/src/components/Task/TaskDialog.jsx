@@ -110,7 +110,7 @@ const TaskDialog = ({ task, isAdmin }) => {
 
           {/* Dropdown menu */}
           <div
-            className={`absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 dark:divide-gray-800 rounded-md bg-white dark:bg-[#121212] shadow-lg ring-1 ring-black/5 focus:outline-none transform transition-all ${
+            className={`absolute z-50 right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 dark:divide-gray-800 rounded-md bg-white dark:bg-[#121212] shadow-lg ring-1 ring-black/5 focus:outline-none transform transition-all ${
               menuOpen
                 ? "opacity-100 scale-100 visible"
                 : "opacity-0 scale-95 invisible"
@@ -124,7 +124,7 @@ const TaskDialog = ({ task, isAdmin }) => {
                     if (el.enabled) el.onClick();
                     setMenuOpen(false);
                   }}
-                  className={`flex items-center w-full px-2 py-2 text-sm rounded-md transition-colors z-10 ${
+                  className={`flex items-center w-full px-2 py-2 text-sm rounded-md transition-colors  ${
                     el.enabled
                       ? "text-gray-900 dark:text-gray-300 hover:bg-blue-500 hover:text-white "
                       : "text-gray-400 dark:text-gray-700 cursor-not-allowed"

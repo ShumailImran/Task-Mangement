@@ -36,7 +36,9 @@ const UserTable = ({ users }) => {
         <p
           className={`
             w-fit px-3 py-1 rounded-full text-sm ${
-              user?.isActive ? "bg-blue-200" : "bg-yellow-100"
+              user?.isActive
+                ? "bg-blue-600 text-blue-200"
+                : "bg-yellow-700 text-yellow-200"
             }
 
         `}

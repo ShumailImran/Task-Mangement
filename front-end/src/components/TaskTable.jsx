@@ -51,7 +51,7 @@ const TaskTable = ({ tasks }) => {
           {task.team.map((m, index) => (
             <div
               key={index}
-              className={`w-7 h-7 rounded-full text-white dark:text-[#121212] flex items-center justify-center text-sm -mr-1
+              className={`w-7 h-7 rounded-full text-white font-semibold  flex items-center justify-center text-sm -mr-1
                 ${BGS[index % BGS.length]}`}
             >
               <UserInfo user={m} />
@@ -61,7 +61,7 @@ const TaskTable = ({ tasks }) => {
       </td>
 
       <td className="py-2 hidden md:block">
-        <span className="text-base text-gray-600">
+        <span className="text-base text-gray-600 dark:text-gray-300">
           {moment(task?.date).fromNow()}
         </span>
       </td>

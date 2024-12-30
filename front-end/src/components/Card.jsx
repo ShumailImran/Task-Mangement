@@ -12,7 +12,7 @@ const Card = ({ label, count, bg, icon }) => {
       </div>
 
       <div
-        className={`w-10 h-10 rounded-full flex items-center justify-center text-white dark:text-[#121212] ${bg}`}
+        className={`w-10 h-10 rounded-full flex items-center justify-center text-white  ${bg}`}
       >
         {icon}
       </div>

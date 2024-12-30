@@ -11,7 +11,7 @@ function TaskTitle({ label, className }) {
       </div>
 
       <button className="hidden md:block">
-        <IoMdAdd className="text-lg text-black" />
+        <IoMdAdd className="text-lg text-black dark:text-white" />
       </button>
     </div>
   );

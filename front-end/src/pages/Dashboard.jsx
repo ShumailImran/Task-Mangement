@@ -1,9 +1,9 @@
-import { FaNewspaper } from "react-icons/fa";
+import { FaClipboardCheck, FaNewspaper } from "react-icons/fa";
 import { FaArrowsToDot } from "react-icons/fa6";
-import { LuClipboardEdit } from "react-icons/lu";
 import { MdAdminPanelSettings } from "react-icons/md";
 import Card from "../components/Card";
 import Chart from "../components/Chart";
+import PieChartComponent from "../components/PieChartComponent";
 import Loader from "../components/Loader";
 import TaskTable from "../components/TaskTable";
 import UserTable from "../components/UserTable";
@@ -19,7 +19,7 @@ function Dashboard() {
       </div>
     );
 
-  const totals = data?.tasks;
+  const totals = data?.tasks || {};
 
   const stats = [
     {
@@ -29,7 +29,6 @@ function Dashboard() {
       icon: <FaNewspaper />,
       bg: "bg-[#1d4ed8]",
     },
-
     {
       id: "2",
       label: "COMPLETED TASKS",
@@ -37,46 +36,68 @@ function Dashboard() {
       icon: <MdAdminPanelSettings />,
       bg: "bg-[#0f766e]",
     },
-
     {
       id: "3",
       label: "TASK IN PROGRESS",
       total: totals["in progress"] || 0,
-      icon: <LuClipboardEdit />,
+      icon: <FaClipboardCheck />,
       bg: "bg-[#f59e0b]",
     },
-
     {
       id: "4",
-      label: "TODOS",
+      label: "TODO",
       total: totals["todo"] || 0,
       icon: <FaArrowsToDot />,
       bg: "bg-[#be185d]",
     },
   ];
 
+  const pieChartData = [
+    {
+      name: "TODO",
+      value: totals["todo"] || 0,
+      color: "#be185d",
+    },
+    {
+      name: "IN PROGRESS",
+      value: totals["in progress"] || 0,
+      color: "#f59e0b",
+    },
+    {
+      name: "COMPLETED",
+      value: totals["completed"] || 0,
+      color: "#0f766e",
+    },
+  ];
+
+  const filteredPieChartData = pieChartData.filter((item) => item.value > 0);
+
   return (
-    <div className="h-full py-4 ">
-      <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-4 gap-5">
+    <div className="h-full py-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
         {stats.map(({ icon, bg, label, total }, index) => (
           <Card key={index} icon={icon} bg={bg} label={label} count={total} />
         ))}
       </div>
 
-      <div className="w-full bg-white dark:bg-[#121212] my-16 p-4 rounded shadow-sm">
-        <h4 className="text-xl text-gray-600 dark:text-gray-300 font-semibold">
-          Charts By Priority
-        </h4>
-        <Chart data={data?.graphData} />
+      <div className="flex flex-col lg:flex-row gap-5 mt-16">
+        <div className="w-full lg:w-2/3 bg-white dark:bg-[#121212] p-4 rounded shadow-sm">
+          <h4 className="text-xl text-gray-600 dark:text-gray-300 font-semibold">
+            Charts By Priority
+          </h4>
+          <Chart data={data?.graphData} />
+        </div>
+
+        <div className="w-full lg:w-1/3 bg-white dark:bg-[#121212] p-4 rounded shadow-sm">
+          <h4 className="text-xl text-gray-600 dark:text-gray-300 font-semibold">
+            Task Stages
+          </h4>
+          <PieChartComponent data={filteredPieChartData} />
+        </div>
       </div>
 
       <div className="w-full flex flex-col lg:flex-row gap-4 2xl:gap-10 py-8">
-        {/* /left */}
-
-        <TaskTable tasks={data.last10Task} />
-
-        {/* /right */}
-
+        <TaskTable tasks={data?.last10Task} />
         <UserTable users={data?.user} />
       </div>
     </div>
