@@ -58,7 +58,7 @@ function ModalWrapper({ open, setOpen, children }) {
         {/* Close Button */}
         <button
           onClick={() => setOpen(false)}
-          className="absolute top-2 right-2 text-gray-400  dark:hover:text-gray-200 hover:text-gray-600"
+          className="text-xl absolute top-2 right-2 text-gray-400  dark:hover:text-gray-200 hover:text-gray-600"
           aria-label="Close modal"
         >
           ×

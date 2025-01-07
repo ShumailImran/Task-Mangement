@@ -7,8 +7,8 @@ import {
   MdKeyboardArrowUp,
   MdKeyboardDoubleArrowDown,
   MdKeyboardDoubleArrowUp,
+  MdMessage,
   MdOutlineDoneAll,
-  MdOutlineMessage,
   MdTaskAlt,
 } from "react-icons/md";
 import { RxActivityLog } from "react-icons/rx";
@@ -30,12 +30,6 @@ const ICONS = {
   normal: <MdKeyboardDoubleArrowDown />,
 };
 
-const bgColor = {
-  high: "bg-red-200",
-  medium: "bg-yellow-200",
-  low: "bg-blue-200",
-};
-
 const TABS = [
   { title: "Task Detail", icon: <FaTasks /> },
   { title: "Activities/Timeline", icon: <RxActivityLog /> },
@@ -43,33 +37,33 @@ const TABS = [
 
 const TASKTYPEICON = {
   commented: (
-    <div className="w-10 h-10 rounded-full bg-gray-500 flex items-center justify-center text-white">
-      <MdOutlineMessage />,
+    <div className="w-8 h-8 rounded-full bg-pink-500 flex items-center justify-center text-white">
+      <MdMessage size={15} />
     </div>
   ),
   started: (
-    <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white">
-      <FaThumbsUp size={20} />
+    <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white">
+      <FaThumbsUp size={14} />
     </div>
   ),
   assigned: (
-    <div className="w-6 h-6 flex items-center justify-center rounded-full bg-gray-500 text-white">
+    <div className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-500 text-white">
       <FaUser size={14} />
     </div>
   ),
   bug: (
-    <div className="text-red-600">
-      <FaBug size={24} />
+    <div className="bg-red-600 w-8 h-8 rounded-full flex items-center justify-center text-white">
+      <FaBug size={14} />
     </div>
   ),
   completed: (
-    <div className="w-10 h-10 rounded-full bg-green-600 flex items-center justify-center text-white">
-      <MdOutlineDoneAll size={24} />
+    <div className="w-8 h-8 rounded-full bg-green-600 flex items-center justify-center text-white">
+      <MdOutlineDoneAll size={16} />
     </div>
   ),
   "in progress": (
     <div className="w-8 h-8 flex items-center justify-center rounded-full bg-violet-600 text-white">
-      <GrInProgress size={16} />
+      <GrInProgress size={12} />
     </div>
   ),
 };
@@ -106,23 +100,23 @@ function TaskDetails() {
       <Tabs tabs={TABS} setSelected={setSelected}>
         {selected === 0 ? (
           <>
-            <div className="w-full flex flex-col md:flex-row gap-5 2xl:gap-8 bg-white dark:bg-black/50 shadow-md p-8 overflow-y-auto">
+            <div className="w-full flex flex-col  gap-5 2xl:gap-8 bg-white dark:bg-black/50 shadow-md p-8 overflow-y-auto">
               {/* -----------LEFT SIDE------------ */}
 
-              <div className="w-full md:w-1/2 space-y-8">
-                <div className="flex items-center gap-5">
+              <div className="w-full space-y-8">
+                <div className="flex flex-wrap items-center gap-5">
                   {/* PRIORITY */}
                   <div
                     className={`flex gap-1 items-center text-base font-medium px-3 py-1 rounded-full ${
                       PRIORITY_STYLES[task?.priority]
-                    } ${bgColor[task?.priority]}`}
+                    } `}
                   >
                     <span className="text-lg">{ICONS[task?.priority]}</span>
                     <span className="uppercase">{task?.priority} Priority</span>
                   </div>
 
                   {/* STAGE */}
-                  <div className={`flex items-center gap-2`}>
+                  <div className="flex items-center gap-2">
                     <div
                       className={`w-4 h-4 rounded-full ${
                         TASK_TYPE[task?.stage]
@@ -143,7 +137,7 @@ function TaskDetails() {
                 <div className="flex items-center gap-8 p-4 border-y border-gray-200 dark:border-gray-700 dark:text-gray-200">
                   {/* ASSETS */}
                   <div className="space-x-2 ">
-                    <span className="font-semibold ">Assets :</span>
+                    <span className="font-semibold ">Assets:</span>
                     <span>{task?.assets?.length}</span>
                   </div>
                   <span className="text-gray-400">|</span>
@@ -186,54 +180,58 @@ function TaskDetails() {
 
                 {/* SUB-TASK */}
 
-                <div className="space-y-4 py-6 ">
-                  <p className="text-gray-500 dark:text-gray-200 font-semibold text-sm">
-                    SUB-TASKS
-                  </p>
-                  <div className="space-y-8">
-                    {task?.subTasks?.map((el, index) => (
-                      <div className="flex gap-3" key={index}>
-                        <div className="w-10 h-10 flex items-center justify-center rounded-full bg-violet-200">
-                          <MdTaskAlt className="text-violet-600" size={26} />
-                        </div>
-
-                        <div className="space-y-1 ">
-                          <div className="flex gap-2 items-center">
-                            <span className="text-sm text-gray-500 dark:text-gray-200">
-                              {new Date(el?.date).toDateString()}
-                            </span>
-                            <span className="px-2 py-0.5 text-center text-sm rounded-full bg-violet-100 text-violet-700 font-semibold">
-                              {el?.tag}
-                            </span>
+                {task?.subTasks?.length > 0 && (
+                  <div className="space-y-4 py-6 ">
+                    <p className="text-gray-500 dark:text-gray-200 font-semibold text-sm">
+                      SUB-TASKS
+                    </p>
+                    <div className="space-y-8">
+                      {task?.subTasks?.map((el, index) => (
+                        <div className="flex gap-3" key={index}>
+                          <div className="w-10 h-10 flex items-center justify-center rounded-full bg-violet-200">
+                            <MdTaskAlt className="text-violet-600" size={26} />
                           </div>
 
-                          <p className="text-gray-700 dark:text-gray-400">
-                            {el?.title}
-                          </p>
+                          <div className="space-y-1 ">
+                            <div className="flex gap-2 items-center">
+                              <span className="text-sm text-gray-500 dark:text-gray-200">
+                                {new Date(el?.date).toDateString()}
+                              </span>
+                              <span className="px-2 py-0.5 text-center text-sm rounded-full bg-violet-100 text-violet-700 font-semibold">
+                                {el?.tag}
+                              </span>
+                            </div>
+
+                            <p className="text-gray-700 dark:text-gray-400">
+                              {el?.title}
+                            </p>
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
 
               {/* --------RIGHT SIDE---------- */}
-              <div className="w-full md:w-1/2 space-y-8">
-                <p className="text-lg font-semibold  dark:text-gray-200">
-                  ASSETS
-                </p>
+              {task?.assets?.length > 0 && (
+                <div className="w-full md:w-1/2 space-y-8">
+                  <p className="text-lg font-semibold  dark:text-gray-200">
+                    ASSETS
+                  </p>
 
-                <div className="w-full grid grid-cols-2 gap-4">
-                  {task?.assets?.map((el, index) => (
-                    <img
-                      src={el}
-                      key={index}
-                      alt={task?.title}
-                      className="w-full rounded h-28 md:h-36 2xl:h-52 cursor-pointer transition-all duration-700 hover:scale-125 hover:z-50"
-                    />
-                  ))}
+                  <div className="w-full grid grid-cols-2 md:grid-cols-3 gap-4">
+                    {task?.assets?.map((el, index) => (
+                      <img
+                        src={el}
+                        key={index}
+                        alt={task?.title}
+                        className="w-full rounded h-28 md:h-36 2xl:h-52 cursor-pointer transition-all duration-700 hover:scale-125 hover:z-50"
+                      />
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </>
         ) : (
@@ -253,7 +251,6 @@ function TaskDetails() {
 function Activities({ activity, id, refetch }) {
   const [selected, setSelected] = useState(act_types[0]);
   const [text, setText] = useState("");
-
   const [postActivity, { isLoading }] = usePostTaskActivityMutation();
 
   const handleSubmit = async () => {
@@ -263,11 +260,7 @@ function Activities({ activity, id, refetch }) {
         activity: text,
       };
 
-      const result = await postActivity({
-        data: activityData,
-        id,
-      }).unwrap();
-
+      const result = await postActivity({ data: activityData, id }).unwrap();
       setText("");
       toast.success(result?.message);
       refetch();
@@ -276,7 +269,6 @@ function Activities({ activity, id, refetch }) {
       toast.error(error?.data?.message || error.error);
     }
   };
-
   function Card({ item }) {
     return (
       <div className="flex space-x-4">
@@ -305,13 +297,13 @@ function Activities({ activity, id, refetch }) {
   }
 
   return (
-    <div className="w-full flex gap-10 2xl:gap-20 min-h-screen py-8 px-10 bg-white dark:bg-black/50 shadow rounded-md justify-between overflow-y-auto">
+    <div className="w-full flex flex-col md:flex-row gap-10 py-8 px-4 md:px-10 bg-white dark:bg-black/50 shadow rounded-md justify-between overflow-y-auto">
       <div className="w-full md:w-1/2">
         <h4 className="text-gray-600 dark:text-gray-200 font-semibold text-lg mb-5">
           Activities
         </h4>
 
-        <div className="w-full ">
+        <div className="w-full">
           {activity?.map((el, index) => (
             <Card
               key={index}
@@ -326,40 +318,39 @@ function Activities({ activity, id, refetch }) {
         <h4 className="text-gray-600 dark:text-gray-300 font-semibold text-lg mb-5">
           Add Activity
         </h4>
-
         <div className="w-full flex flex-wrap gap-5">
           {act_types.map((item, index) => (
             <div
-              key={item}
+              key={index}
               className="flex items-center gap-2 dark:text-gray-400"
             >
               <input
                 type="checkbox"
                 className="w-4 h-4"
-                checked={selected === item ? true : false}
+                checked={selected === item}
                 onChange={() => setSelected(item)}
               />
               <p>{item}</p>
             </div>
           ))}
-          <textarea
-            rows={10}
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            placeholder="Type ...."
-            className="bg-white dark:bg-[#121212] dark:text-gray-300 w-full mt-10 border border-gray-300 outline-none p-4 rounded-md focus:ring-2 ring-blue-500"
-          ></textarea>
-          {isLoading ? (
-            <Loader />
-          ) : (
-            <Button
-              type="button"
-              label="Submit"
-              onClick={handleSubmit}
-              className="bg-blue-600 text-white rounded"
-            />
-          )}
         </div>
+        <textarea
+          rows={4}
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          placeholder="Type ...."
+          className="bg-white dark:bg-[#121212] dark:text-gray-300 w-full mt-4 p-2 border border-gray-300 dark:border-gray-700 rounded"
+        ></textarea>
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <Button
+            type="button"
+            label="Submit"
+            onClick={handleSubmit}
+            className="bg-blue-600 text-white rounded"
+          />
+        )}
       </div>
     </div>
   );

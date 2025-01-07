@@ -54,17 +54,17 @@ function Dashboard() {
 
   const pieChartData = [
     {
-      name: "TODO",
+      name: "Todo",
       value: totals["todo"] || 0,
       color: "#be185d",
     },
     {
-      name: "IN PROGRESS",
+      name: "In Progress",
       value: totals["in progress"] || 0,
       color: "#f59e0b",
     },
     {
-      name: "COMPLETED",
+      name: "Completed",
       value: totals["completed"] || 0,
       color: "#0f766e",
     },
@@ -82,7 +82,7 @@ function Dashboard() {
 
       <div className="flex flex-col lg:flex-row gap-5 mt-16">
         <div className="w-full lg:w-2/3 bg-white dark:bg-[#121212] p-4 rounded shadow-sm">
-          <h4 className="text-xl text-gray-600 dark:text-gray-300 font-semibold">
+          <h4 className="text-xl text-gray-600 dark:text-gray-300 font-semibold mb-4">
             Charts By Priority
           </h4>
           <Chart data={data?.graphData} />

@@ -122,7 +122,7 @@ function Trash() {
         <th className="py-2">Task Title</th>
         <th className="py-2">Priority</th>
         <th className="py-2">Stage</th>
-        <th className="py-2 line-clamp-1">Modified On</th>
+        <th className="py-2 ">Modified On</th>
       </tr>
     </thead>
   );
@@ -133,7 +133,7 @@ function Trash() {
         <div className="flex items-center gap-2">
           <div className={`w-4 h-4 rounded-full ${TASK_TYPE[item.stage]}`} />
 
-          <p className="w-full line-clamp-2 text-base ">{item?.title}</p>
+          <p className="w-full  text-base ">{item?.title}</p>
         </div>
       </td>
 
@@ -146,18 +146,18 @@ function Trash() {
         </div>
       </td>
 
-      <td className="py-2 capitalize text-center md:text-start">
-        {item?.stage}
-      </td>
+      <td className="py-2 capitalize text-start">{item?.stage}</td>
       <td className="py-2 text-sm">{new Date(item?.date).toDateString()}</td>
 
       <td className="py-2 flex gap-1 justify-end">
         <Button
-          icon={<MdOutlineRestore className="text-xl text-gray-500" />}
+          icon={<MdOutlineRestore className="text-xl text-blue-600" />}
           onClick={() => restoreClick(item._id)}
         />
         <Button
-          icon={<MdDelete className="text-xl text-red-600" />}
+          icon={
+            <MdDelete className="text-xl text-gray-600 dark:text-white/90 hover:text-red-500 dark:hover:text-red-500" />
+          }
           onClick={() => deleteClick(item._id)}
         />
       </td>
@@ -169,36 +169,38 @@ function Trash() {
       <div className="w-full md:px-1 px-0 mb-6">
         <div className="flex items-center justify-between mb-8">
           <Title title="Trashed Tasks" />
+        </div>
 
-          {data?.tasks?.length > 0 && (
-            <div className="flex gap-2 md:gap-4 items-center">
+        {data?.tasks?.length > 0 ? (
+          <div>
+            <div className="bg-white dark:bg-[#121212] dark:text-gray-300 px-2 md:px-6 py-4 shadow-md rounded">
+              {/* Add proper styles for scrolling */}
+              <div className="overflow-x-auto w-full">
+                <table className="w-full min-w-[800px] mb-5">
+                  {" "}
+                  {/* Set a minimum width */}
+                  <TableHeader />
+                  <tbody>
+                    {data?.tasks?.map((tk, id) => (
+                      <TableRow key={id} item={tk} />
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div className="flex gap-2 md:gap-4 items-center justify-end mt-4">
               <Button
                 label="Restore All"
-                icon={<MdOutlineRestore className="text-lg hidden md:flex" />}
-                className="flex flex-row-reverse gap-1 items-center  text-gray-600 dark:text-gray-300 text-sm md:text-base rounded-md 2xl:py-2.5"
+                icon={<MdOutlineRestore className="text-lg " />}
+                className="flex flex-row-reverse gap-1 items-center bg-blue-600 text-white  text-sm md:text-base rounded-md 2xl:py-2.5"
                 onClick={() => restoreAllClick()}
               />
               <Button
                 label="Delete All"
-                icon={<MdDelete className="text-lg hidden md:flex" />}
-                className="flex flex-row-reverse gap-1 items-center  text-red-600 text-sm md:text-base rounded-md 2xl:py-2.5"
+                icon={<MdDelete className="text-lg " />}
+                className="flex flex-row-reverse gap-1 items-center text-gray-600  dark:text-white/90 text-sm md:text-base rounded-md 2xl:py-2.5"
                 onClick={() => deleteAllClick()}
               />
-            </div>
-          )}
-        </div>
-
-        {data?.tasks?.length > 0 ? (
-          <div className="bg-white dark:bg-[#121212] dark:text-gray-300 px-2 md:px-6 py-4 shadow-md rounded">
-            <div className="overflow-x-auto">
-              <table className="w-full mb-5">
-                <TableHeader />
-                <tbody>
-                  {data?.tasks?.map((tk, id) => (
-                    <TableRow key={id} item={tk} />
-                  ))}
-                </tbody>
-              </table>
             </div>
           </div>
         ) : (

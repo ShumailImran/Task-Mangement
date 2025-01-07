@@ -86,9 +86,9 @@ function Users() {
 
   const TableHeader = () => (
     <thead className="border-b ">
-      <tr className="text-left">
-        <th className="py-2">Full Name</th>
-        <th className="py-2">Title</th>
+      <tr className="text-left ">
+        <th className="py-2 ">Full Name</th>
+        <th className="py-2 ">Title</th>
         <th className="py-2">Email</th>
         <th className="py-2">Role</th>
         <th className="py-2">Active</th>
@@ -98,7 +98,7 @@ function Users() {
 
   const TableRow = ({ user }) => (
     <tr className="border-b  hover:bg-gray-400/10 dark:hover:bg-gray-700/50">
-      <td className="py-2">
+      <td className="py-2 text-left pr-4">
         <div className="flex items-center gap-3">
           <div className="w-7 h-7 rounded-full  flex items-center justify-center text-sm bg-blue-700">
             <span className="text-xs text-white font-semibold ms:text-sm text-center">
@@ -109,9 +109,9 @@ function Users() {
         </div>
       </td>
 
-      <td className="p-2">{user.title}</td>
-      <td className="p-2">{user.email || "user@email.com"}</td>
-      <td className="p-2">{user.role}</td>
+      <td className="pr-2">{user.title}</td>
+      <td className="pr-2">{user.email || "user@email.com"}</td>
+      <td className="pr-2">{user.role}</td>
 
       <td>
         <button
@@ -126,9 +126,9 @@ function Users() {
         </button>
       </td>
 
-      <td className="p-2 flex gap-4 justify-end">
+      <td className="p-2 flex gap-[-4] md:gap-4 justify-end">
         <Button
-          className="text-blue-600 hover:text-blue-500 font-semibold sm:px-0"
+          className="text-blue-600 hover:text-blue-500 font-semibold sm:px-1"
           // label="Edit"
           icon={<MdEdit className="text-lg " />}
           type="button"
@@ -136,7 +136,7 @@ function Users() {
         />
 
         <Button
-          className="text-red-700 hover:text-red-500 font-semibold sm:px-0"
+          className="text-white/90 hover:text-red-500 font-semibold sm:px-1"
           // label="Delete"
           icon={<MdDelete className="text-lg " />}
           onClick={() => deleteClick(user?._id)}

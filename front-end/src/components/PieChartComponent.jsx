@@ -61,7 +61,7 @@ function PieChartComponent({ data }) {
             />
           ))}
         </Pie>
-        <Tooltip />
+        <Tooltip height={60} />
         <Legend />
       </PieChart>
     </ResponsiveContainer>

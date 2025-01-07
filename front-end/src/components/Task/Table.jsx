@@ -1,6 +1,8 @@
 import { useState } from "react";
 import {
   MdAttachFile,
+  MdDelete,
+  MdEdit,
   MdKeyboardArrowDown,
   MdKeyboardArrowUp,
   MdKeyboardDoubleArrowDown,
@@ -62,12 +64,12 @@ function Table({ tasks }) {
 
   const TableHeader = () => (
     <thead className="w-full border-b border-gray-300 dark:border-gray-600">
-      <tr className="w-full text-black dark:text-white text-left">
-        <th className="py-2">Task Title</th>
-        <th className="py-2">Priority</th>
-        <th className="py-2 line-clamp-1">Created At</th>
-        {/* <th className="py-2">Assets</th> */}
-        <th className="py-2">Team</th>
+      <tr className="w-full text-black dark:text-white text-left mr-3">
+        <th className="py-2 ">Task Title</th>
+        <th className="py-2 pr-10 ">Priority</th>
+        <th className="py-2 pr-10">Created</th>
+        <th className="py-2 pr-20">Assets</th>
+        <th className="py-2 pr-10">Team</th>
       </tr>
     </thead>
   );
@@ -75,10 +77,14 @@ function Table({ tasks }) {
   const TableRow = ({ task }) => (
     <tr className="border-b border-gray-300 text-gray-600 dark:text-gray-300 hover:bg-gray-300/10 dark:hover:bg-gray-700/10">
       {/* TITLE */}
-      <td className="py-2">
+      <td className="py-2 pr-4">
         <div className="flex items-center gap-1">
-          <div className={`w-4 h-4 rounded-full ${TASK_TYPE[task.stage]}`} />
-          <p className="w-full line-clamp-2 text-base ">{task?.title}</p>
+          <div
+            className={`w-2 h-2 md:w-3 md:h-3 rounded-full ${
+              TASK_TYPE[task.stage]
+            }`}
+          />
+          <p className="w-full  text-base ">{task?.title}</p>
         </div>
       </td>
 
@@ -88,19 +94,19 @@ function Table({ tasks }) {
           <span className={`text-lg ${PRIORITY_STYLES[task?.priority]}`}>
             {ICONS[task?.priority]}
           </span>
-          <span className="capitalize line-clamp-1 ">{task?.priority}</span>
+          <span className="capitalize">{task?.priority}</span>
         </div>
       </td>
 
       {/* CREATED AT */}
       <td className="py-2">
-        <span className="text-sm text">{formatDate(new Date(task?.date))}</span>
+        <span className="text-sm">{formatDate(new Date(task?.date))}</span>
       </td>
 
       {/* ASSETS */}
 
-      {/* <td className="py-2">
-        <div className="flex items-center gap-3">
+      <td className="py-2 ">
+        <div className="flex items-center gap-2">
           <div className="flex gap-1 items-center text-sm ">
             <BiMessageAltDetail />
             <span>{task?.activities?.length}</span>
@@ -116,7 +122,7 @@ function Table({ tasks }) {
             <span>{task?.subTasks?.length}</span>
           </div>
         </div>
-      </td> */}
+      </td>
 
       {/* TEAM */}
 
@@ -125,7 +131,7 @@ function Table({ tasks }) {
           {task?.team.map((m, index) => (
             <div
               key={m._id}
-              className={`w-7 h-7 rounded-full text-white flex items-center justify-center text-sm -mr-1 ${
+              className={`w-7 h-7 rounded-full text-white flex items-center justify-center text-sm font-semibold -mr-1 ${
                 BGS[index % BGS.length]
               }`}
             >
@@ -137,17 +143,19 @@ function Table({ tasks }) {
 
       {/* BUTTON */}
 
-      <td className="py-2 flex gap-2 md:gap-4 justify-end">
+      <td className="py-2 flex gap-[-4] md:gap-4 justify-end">
         <Button
-          className="text-blue-600 hover:text-blue-500 sm:px-0 text-sm md:text-base"
-          label="Edit"
+          className="text-blue-600 hover:text-blue-500 py-10 text-sm md:text-base"
+          // label="Edit"
+          icon={<MdEdit className="text-lg " />}
           type="button"
           onClick={() => editTaskHandler(task)}
         />
 
         <Button
-          className="text-red-700 hover:text-red-500 sm:px-0 text-sm md:text-base"
-          label="Delete"
+          className="text-gray-600 dark:text-white/90  hover:text-red-500 dark:hover:text-red-500 sm:px-1 text-sm md:text-base"
+          // label="Delete"
+          icon={<MdDelete className="text-lg " />}
           type="button"
           onClick={() => deleteClicks(task._id)}
         />
@@ -158,8 +166,8 @@ function Table({ tasks }) {
   return (
     <>
       <div className="bg-white dark:bg-[#121212] px-2 md:px-4 pt-4 pb-9 shadow-md rounded">
-        <div className="overflow-hidden md:overflow-x-auto">
-          <table className="w-full table-auto">
+        <div className="overflow-y-hidden">
+          <table className="w-full ">
             <TableHeader />
             <tbody>
               {tasks.map((task, index) => (

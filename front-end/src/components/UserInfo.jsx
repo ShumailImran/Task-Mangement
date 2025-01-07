@@ -18,7 +18,7 @@ function UserInfo({ user }) {
       </button>
 
       <div
-        className={`absolute left-1/2 z-20 mt-3 w-90 max-w-sm -translate-x-1/2 transform px-4 sm:px-0 transition-all duration-300 ${
+        className={`absolute right-1 z-20 mt-3 w-90 max-w-sm  transform px-4 sm:px-0 transition-all duration-300 ${
           isPopoverOpen
             ? "opacity-100 translate-y-0"
             : "opacity-0 -translate-y-2 pointer-events-none"

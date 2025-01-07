@@ -45,16 +45,18 @@ function TaskCard({ task }) {
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
-          <div className={`w-4 h-4 rounded-full ${TASK_TYPE[task.stage]}`} />
-          <h4 className="line-clamp-1 text-black dark:text-white">
-            {task?.title}
-          </h4>
-        </div>
+        <>
+          <div className="flex items-center gap-2">
+            <div className={`w-4 h-4 rounded-full ${TASK_TYPE[task.stage]}`} />
+            <h4 className="line-clamp-1 text-black dark:text-white">
+              {task?.title}
+            </h4>
+          </div>
 
-        <span className="text-sm text-gray-600 dark:text-gray-300">
-          {formatDate(new Date(task?.createdAt))}
-        </span>
+          <span className="text-sm text-gray-600 dark:text-gray-300">
+            {formatDate(new Date(task?.createdAt))}
+          </span>
+        </>
 
         <div className="w-full border-t border-gray-200 dark:border-gray-700 my-2" />
         <div className="flex items-center justify-between mb-2">
@@ -77,7 +79,7 @@ function TaskCard({ task }) {
           </div>
 
           {/* RIGHT */}
-          <div className="flex flex-row-reverse overflow-hidden">
+          <div className="flex flex-row-reverse">
             {task?.team?.map((m, index) => (
               <div
                 key={index}
@@ -119,7 +121,7 @@ function TaskCard({ task }) {
           <button
             onClick={() => setOpen(true)}
             disabled={user.isAdmin ? false : true}
-            className="w-full flex gap-4 items-center text-sm text-gray-500 dark:text-gray-300 font-semibold disabled:cursor-not-allowed disabled:text-gray-300 disabled:dark:text-gray-600"
+            className="w-full flex gap-4 items-center text-sm text-yellow-500  font-semibold disabled:cursor-not-allowed disabled:text-gray-300 disabled:dark:text-gray-600"
           >
             <IoMdAdd className="text-lg" />
             <span>ADD SUBTASK</span>

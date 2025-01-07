@@ -21,15 +21,15 @@ export default function ConfirmationDialog({
     <>
       <ModalWrapper open={open} setOpen={closeDialog}>
         <div className="py-4 w-full flex flex-col gap-4 items-center justify-center">
-          <h3 className="">
+          <h3>
             <p
-              className={`p-3 rounded-full ${
+              className={`p-2 rounded-full ${
                 type === "restore" || type === "restoreAll"
                   ? "text-yellow-600 bg-yellow-100"
                   : "text-red-600 bg-red-200"
               }`}
             >
-              <FaQuestion size={60} />
+              <FaQuestion size={32} />
             </p>
           </h3>
 
@@ -37,7 +37,7 @@ export default function ConfirmationDialog({
             {msg ?? "Are you sure you want to delete the selected record?"}
           </p>
 
-          <div className="bg-gray-50 dark:bg-[#121212] py-3 flex flex-row-reverse gap-4">
+          <div className="bg-gray-50 dark:bg-[#121212] py-3 flex flex-row-reverse gap-6">
             <Button
               type="button"
               className="bg-white dark:bg-[#121212] px-8 text-sm font-semibold text-gray-900 dark:text-gray-200 sm:w-auto border border-gray-700"
@@ -76,8 +76,8 @@ export function UserAction({ open, setOpen, onClick = () => {} }) {
       <ModalWrapper open={open} setOpen={closeDialog}>
         <div className="py-4 w-full flex flex-col gap-4 items-center justify-center">
           <h3 className="">
-            <p className={`p-3 rounded-full text-red-600 bg-red-200`}>
-              <FaQuestion size={60} />
+            <p className={`p-2 rounded-full text-red-600 bg-red-200`}>
+              <FaQuestion size={32} />
             </p>
           </h3>
 

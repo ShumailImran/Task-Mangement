@@ -23,16 +23,6 @@ function Navbar({ toggleDarkMode, darkMode }) {
           <div className="bg-blue-600 p-2 rounded-full md:hidden">
             <MdOutlineAddTask className="text-white text-2xl " />
           </div>
-
-          {/* <div className="w-64 2xl:w-[400px] flex items-center py-2 px-3 rounded-full bg-[#f3f4f6]">
-          <MdOutlineSearch className="text-gray-500 text-xl" />
-          
-          <input
-          type="text"
-          placeholder="Search..."
-          className="flex-1 outline-none bg-transparent placeholder:text-gray-500 text-gray-800"
-          />
-          </div> */}
         </div>
 
         {/* RIGHT SIDE */}
@@ -47,12 +37,6 @@ function Navbar({ toggleDarkMode, darkMode }) {
             <span className="slider round"></span>
           </label>
 
-          {/* <button
-            className="w-10 h-10 bg-neutral-900 dark:bg-white rounded-full text-white dark:text-black font-semibold"
-            onClick={toggleDarkMode}
-          >
-            {darkMode ? "🌞" : "🌜"}
-          </button> */}
           <NotificationPanel />
 
           <UserAvatar />
