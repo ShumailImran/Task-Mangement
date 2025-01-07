@@ -10,11 +10,3 @@ export const apiSlice = createApi({
   tagTypes: [],
   endpoints: (builder) => ({}),
 });
-
-// {  "_id": "65c202d4aa62f32ffd1303cc",
-//   "name": "COD BLACK",
-//   "title": "Administrator",
-//   "email": "admin@gmail.com",
-//   "role": "Admin",
-//   "isActive": true,
-//   "isAdmin": true}

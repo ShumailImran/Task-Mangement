@@ -142,7 +142,7 @@ function Trash() {
           <span className={`text-lg ${PRIORITY_STYLES[item?.priority]}`}>
             {ICONS[item?.priority]}
           </span>
-          <span className="">{item?.priority}</span>
+          <span>{item?.priority}</span>
         </div>
       </td>
 
@@ -176,8 +176,7 @@ function Trash() {
             <div className="bg-white dark:bg-[#121212] dark:text-gray-300 px-2 md:px-6 py-4 shadow-md rounded">
               {/* Add proper styles for scrolling */}
               <div className="overflow-x-auto w-full">
-                <table className="w-full min-w-[800px] mb-5">
-                  {" "}
+                <table className="w-full min-w-[530px] mb-5">
                   {/* Set a minimum width */}
                   <TableHeader />
                   <tbody>

@@ -36,7 +36,6 @@ const renderCustomizedLabel = ({
 function PieChartComponent({ data }) {
   // Check if the "dark" class is active
   const isDarkMode = document.documentElement.classList.contains("dark");
-
   const strokeColor = isDarkMode ? "#121212" : "#FFFFFF"; // Match dark:bg-black or bg-white
 
   return (
@@ -62,7 +61,15 @@ function PieChartComponent({ data }) {
           ))}
         </Pie>
         <Tooltip height={60} />
-        <Legend />
+        <Legend
+          layout="horizontal" // Set to horizontal layout
+          iconType="circle" // Square icons for colors
+          iconSize={10} // Adjust the size of the color icon
+          wrapperStyle={{
+            paddingTop: 10,
+            fontSize: "16px",
+          }}
+        />
       </PieChart>
     </ResponsiveContainer>
   );

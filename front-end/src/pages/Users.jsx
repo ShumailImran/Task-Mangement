@@ -136,7 +136,7 @@ function Users() {
         />
 
         <Button
-          className="text-white/90 hover:text-red-500 font-semibold sm:px-1"
+          className="text-gray-600 dark:text-white/90 hover:text-red-500 font-semibold sm:px-1"
           // label="Delete"
           icon={<MdDelete className="text-lg " />}
           onClick={() => deleteClick(user?._id)}

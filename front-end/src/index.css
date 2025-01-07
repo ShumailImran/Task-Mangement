@@ -12,6 +12,19 @@
   /* @apply transition-colors duration-200; */
 }
 
+/* Autofill background fix */
+/* Autofill for light mode */
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important; /* Light mode background */
+  -webkit-text-fill-color: #000000 !important; /* Light mode text color */
+}
+
+/* Autofill for dark mode */
+.dark input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px #121212 inset !important; /* Dark mode background */
+  -webkit-text-fill-color: #ffffff !important; /* Dark mode text color */
+}
+
 /* COLOR TOGGLER */
 /* The switch container */
 .switch {
@@ -112,10 +125,11 @@ input:checked + .slider:before {
   box-sizing: border-box;
 }
 
-/* CUSTOM SCROLLER STYLES */
+/* CUSTOM SCROLLBAR STYLE STYLES */
 /* TRACK */
 ::-webkit-scrollbar {
   width: 8px;
+  height: 8px;
 }
 
 /* HANDLE */
@@ -187,15 +201,17 @@ input:checked + .slider:before {
   }
 }
 
-/* Autofill background fix */
-/* Autofill for light mode */
-input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important; /* Light mode background */
-  -webkit-text-fill-color: #000000 !important; /* Light mode text color */
+/* Default horizontal layout */
+.recharts-legend {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Autofill for dark mode */
-.dark input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0px 1000px #121212 inset !important; /* Dark mode background */
-  -webkit-text-fill-color: #ffffff !important; /* Dark mode text color */
+/* Vertical layout on smaller screens */
+@media (max-width: 768px) {
+  .recharts-legend {
+    flex-direction: column;
+  }
 }

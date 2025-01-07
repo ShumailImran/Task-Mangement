@@ -52,6 +52,22 @@ function Dashboard() {
     },
   ];
 
+  // BAR CHART DATA
+  const sortedChartData = [...(data?.graphData || [])].sort((a, b) => {
+    const priorityOrder = {
+      low: 1,
+      normal: 2,
+      medium: 3,
+      high: 4,
+    };
+
+    return (
+      priorityOrder[a.name.toLowerCase()] - priorityOrder[b.name.toLowerCase()]
+    );
+  });
+
+  // PIE CHART DATA
+
   const pieChartData = [
     {
       name: "Todo",
@@ -82,14 +98,14 @@ function Dashboard() {
 
       <div className="flex flex-col lg:flex-row gap-5 mt-16">
         <div className="w-full lg:w-2/3 bg-white dark:bg-[#121212] p-4 rounded shadow-sm">
-          <h4 className="text-xl text-gray-600 dark:text-gray-300 font-semibold mb-4">
+          <h4 className="text-xl text-gray-600 dark:text-gray-300 font-semibold mb-8">
             Charts By Priority
           </h4>
-          <Chart data={data?.graphData} />
+          <Chart data={sortedChartData} />
         </div>
 
         <div className="w-full lg:w-1/3 bg-white dark:bg-[#121212] p-4 rounded shadow-sm">
-          <h4 className="text-xl text-gray-600 dark:text-gray-300 font-semibold">
+          <h4 className="text-xl text-gray-600 dark:text-gray-300 font-semibold lg:mb-4">
             Task Stages
           </h4>
           <PieChartComponent data={filteredPieChartData} />

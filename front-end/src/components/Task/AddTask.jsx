@@ -48,7 +48,13 @@ function AddTask({ open, setOpen, task, refetch }) {
       formData.append("priority", priority);
       formData.append("date", data.date);
       formData.append("team", JSON.stringify(team));
-      assets.forEach((file) => formData.append("assets", file));
+
+      // Separate URLs and files
+      const urls = assets.filter((item) => typeof item === "string"); // Existing URLs
+      const files = assets.filter((item) => typeof item !== "string"); // New files
+
+      urls.forEach((url) => formData.append("assets", url)); // Append existing URLs
+      files.forEach((file) => formData.append("assets", file)); // Append new files
 
       const url = task?._id
         ? `/api/tasks/update/${task._id}`
@@ -65,7 +71,6 @@ function AddTask({ open, setOpen, task, refetch }) {
       }
 
       setUploading(false);
-
       toast.success(resData.message);
 
       if (refetch) {
@@ -83,7 +88,12 @@ function AddTask({ open, setOpen, task, refetch }) {
 
   const handleSelect = (e) => {
     const files = Array.from(e.target.files);
-    setAssets((prevAssets) => [...prevAssets, ...files]);
+
+    // Append only file objects
+    setAssets((prevAssets) => [
+      ...prevAssets.filter((item) => typeof item !== "string"),
+      ...files,
+    ]);
   };
 
   return (
@@ -165,7 +175,7 @@ function AddTask({ open, setOpen, task, refetch }) {
               <Button
                 label="Cancel"
                 type="button"
-                className="bg-white px-5 text-sm font-semibold text-gray-900 sm:w-auto"
+                className="bg-white px-8 text-sm font-semibold text-gray-900 sm:w-auto"
                 onClick={() => setOpen(false)}
               />
 

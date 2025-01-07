@@ -114,7 +114,7 @@ const AddUser = ({ open, setOpen, userData, refetch }) => {
               <Loader />
             </div>
           ) : (
-            <div className="py-3 mt-4 flex flex-row-reverse">
+            <div className="py-3 mt-4 flex flex-row-reverse gap-2">
               <Button
                 type="button"
                 className="bg-white px-8 text-sm font-semibold text-gray-900 sm:w-auto"

@@ -11,8 +11,8 @@ import {
 function Chart({ data }) {
   return (
     <ResponsiveContainer width={"100%"} height={500}>
-      <BarChart width={100} height={40} data={data}>
-        <XAxis dataKey="name" />
+      <BarChart width={100} height={40} data={data} margin={{ left: -20 }}>
+        <XAxis dataKey="name" fontSize={16} />
         <YAxis />
         <Tooltip cursor={{ fill: "transparent" }} />
         <Legend />
