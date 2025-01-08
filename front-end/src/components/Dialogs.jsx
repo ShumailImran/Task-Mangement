@@ -25,7 +25,7 @@ export default function ConfirmationDialog({
             <p
               className={`p-2 rounded-full ${
                 type === "restore" || type === "restoreAll"
-                  ? "text-yellow-600 bg-yellow-100"
+                  ? "text-blue-600 bg-blue-100"
                   : "text-red-600 bg-red-200"
               }`}
             >
@@ -49,8 +49,8 @@ export default function ConfirmationDialog({
               type="button"
               className={`px-8 text-sm font-semibold text-white sm:w-auto ${
                 type === "restore" || type === "restoreAll"
-                  ? "bg-yellow-600"
-                  : "bg-red-600 hover:bg-red-500"
+                  ? "bg-blue-600 hover:bg-blue-700"
+                  : "bg-red-600 hover:bg-red-700"
               }`}
               onClick={onClick}
               label={

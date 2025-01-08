@@ -86,10 +86,14 @@ const NotificationPanel = () => {
                         key={item._id + index}
                         className="group relative flex gap-x-4 rounded-lg p-4 hover:bg-gray-50 dark:hover:bg-gray-800"
                       >
-                        <div className="mt-1 h-8 w-8 flex items-center justify-center rounded-lg bg-gray-200 dark:bg-gray-800 group-hover:bg-white dark:group-hover:bg-[#121212]">
-                          {ICONS[item.notiType] || <div>No Icon</div>}
+                        {/* Fixed Circle Icon Container */}
+                        <div className="mt-1 flex items-center justify-center w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-800 group-hover:bg-white dark:group-hover:bg-[#121212]">
+                          <span className="w-6 h-6 flex items-center justify-center text-sm text-gray-600 dark:text-gray-400">
+                            {ICONS[item.notiType] || "No Icon"}
+                          </span>
                         </div>
 
+                        {/* Notification Content */}
                         <div
                           className="cursor-pointer"
                           onClick={() => viewHandler(item)}
@@ -107,7 +111,7 @@ const NotificationPanel = () => {
                       </div>
                     ))}
                   </div>
-                  <div className="grid grid-cols-2 divide-x bg-gray-50 dark:bg-gray-800">
+                  <div className="grid grid-cols-2 divide-x dark:divide-gray-700 bg-gray-50 dark:bg-gray-800">
                     {callsToAction.map((item) => (
                       <Link
                         key={item.name}

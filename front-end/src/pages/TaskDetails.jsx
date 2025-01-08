@@ -100,10 +100,10 @@ function TaskDetails() {
       <Tabs tabs={TABS} setSelected={setSelected}>
         {selected === 0 ? (
           <>
-            <div className="w-full flex flex-col  gap-5 2xl:gap-8 bg-white dark:bg-black/50 shadow-md p-8 overflow-y-auto">
+            <div className="w-full flex flex-col md:flex-row  gap-5 2xl:gap-8 bg-white dark:bg-black/50 shadow-md p-8 overflow-y-auto">
               {/* -----------LEFT SIDE------------ */}
 
-              <div className="w-full space-y-8">
+              <div className="w-full md:w-1/2 space-y-8">
                 <div className="flex flex-wrap items-center gap-5">
                   {/* PRIORITY */}
                   <div
@@ -213,14 +213,14 @@ function TaskDetails() {
                 )}
               </div>
 
-              {/* --------RIGHT SIDE---------- */}
+              {/* --------ASSETS---------- */}
               {task?.assets?.length > 0 && (
                 <div className="w-full md:w-1/2 space-y-8">
                   <p className="text-lg font-semibold  dark:text-gray-200">
                     ASSETS
                   </p>
 
-                  <div className="w-full grid grid-cols-2 md:grid-cols-3 gap-4">
+                  <div className="w-full grid grid-cols-3 md:grid-cols-2 gap-4">
                     {task?.assets?.map((el, index) => (
                       <img
                         src={el}
@@ -339,18 +339,21 @@ function Activities({ activity, id, refetch }) {
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="Type ...."
-          className="bg-white dark:bg-[#121212] dark:text-gray-300 w-full mt-4 p-2 border border-gray-300 dark:border-gray-700 rounded"
+          className="bg-white dark:bg-[#121212] dark:text-gray-300 w-full my-4 p-2 border border-gray-300 dark:border-gray-700 rounded"
         ></textarea>
-        {isLoading ? (
-          <Loader />
-        ) : (
-          <Button
-            type="button"
-            label="Submit"
-            onClick={handleSubmit}
-            className="bg-blue-600 text-white rounded"
-          />
-        )}
+
+        <div className="flex justify-end">
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <Button
+              type="button"
+              label="Submit"
+              onClick={handleSubmit}
+              className="bg-blue-600 text-white rounded"
+            />
+          )}
+        </div>
       </div>
     </div>
   );
