@@ -8,7 +8,7 @@ import mongoose from "mongoose";
 export const createTask = async (req, res) => {
   try {
     const { userId } = req.user;
-    const { title, team, stage, date, priority } = req.body;
+    const { title, team, stage, date, priority, description } = req.body;
 
     // Ensure the team is an array of ObjectIds
     let teamArray = Array.isArray(team) ? team : JSON.parse(team);
@@ -60,6 +60,7 @@ export const createTask = async (req, res) => {
       team: teamArray, // team is now an array of ObjectIds
       stage: stage.toLowerCase(),
       date,
+      description,
       priority: priority.toLowerCase(),
       assets, // Contains URLs of uploaded files
       activities: activity,
@@ -98,6 +99,7 @@ export const duplicateTask = async (req, res) => {
     newTask.assets = task.assets;
     newTask.priority = task.priority;
     newTask.stage = task.stage;
+    newTask.description = task.description;
 
     await newTask.save();
 
@@ -342,7 +344,8 @@ export const updateTask = async (req, res) => {
         .json({ status: false, message: "Invalid Task ID" });
     }
 
-    const { title, team, date, stage, priority, assets } = req.body;
+    const { title, team, date, stage, priority, description, assets } =
+      req.body;
 
     // Parse `team` if it's a string
     let teamArray = Array.isArray(team) ? team : team ? JSON.parse(team) : [];
@@ -357,6 +360,7 @@ export const updateTask = async (req, res) => {
     task.title = title || task.title;
     task.team = teamArray.length > 0 ? teamArray : task.team; // Only update if provided
     task.date = date || task.date;
+    task.description = description || task.description;
     task.stage = stage ? stage.toLowerCase() : task.stage;
     task.priority = priority ? priority.toLowerCase() : task.priority;
 

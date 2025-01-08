@@ -47,6 +47,7 @@ function AddTask({ open, setOpen, task, refetch }) {
       formData.append("stage", stage);
       formData.append("priority", priority);
       formData.append("date", data.date);
+      formData.append("description", data.description);
       formData.append("team", JSON.stringify(team));
 
       // Separate URLs and files
@@ -169,6 +170,18 @@ function AddTask({ open, setOpen, task, refetch }) {
                 </label>
               </div>
             </div>
+            <Textbox
+              placeholder="Task Description"
+              type="text"
+              multiline={true}
+              name="description"
+              label="Task Description"
+              className="w-full rounded text-gray-300"
+              register={register("description", {
+                required: "Description is required",
+              })}
+              error={errors.title ? errors.title.message : null}
+            />
 
             <div className="bg-gray-50 dark:bg-[#121212] py-6 flex flex-row-reverse gap-4">
               {/* CANCEL */}

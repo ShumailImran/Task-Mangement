@@ -102,7 +102,6 @@ function TaskDetails() {
           <>
             <div className="w-full flex flex-col md:flex-row  gap-5 2xl:gap-8 bg-white dark:bg-black/50 shadow-md p-8 overflow-y-auto">
               {/* -----------LEFT SIDE------------ */}
-
               <div className="w-full md:w-1/2 space-y-8">
                 <div className="flex flex-wrap items-center gap-5">
                   {/* PRIORITY */}
@@ -213,25 +212,40 @@ function TaskDetails() {
                 )}
               </div>
 
-              {/* --------ASSETS---------- */}
-              {task?.assets?.length > 0 && (
-                <div className="w-full md:w-1/2 space-y-8">
-                  <p className="text-lg font-semibold  dark:text-gray-200">
-                    ASSETS
+              {/* --------RIGHT SIDE---------- */}
+              <div className="w-full md:w-1/2 space-y-8">
+                <div className="space-y-4 py-6">
+                  <p className="text-lg font-semibold  dark:text-gray-200 ">
+                    TASK DESCRIPTION
                   </p>
-
-                  <div className="w-full grid grid-cols-3 md:grid-cols-2 gap-4">
-                    {task?.assets?.map((el, index) => (
-                      <img
-                        src={el}
-                        key={index}
-                        alt={task?.title}
-                        className="w-full rounded h-28 md:h-36 2xl:h-52 cursor-pointer transition-all duration-700 hover:scale-125 hover:z-50"
-                      />
-                    ))}
+                  <div>
+                    <p className="text-md text-gray-900 dark:text-gray-400">
+                      {task?.description}
+                    </p>
                   </div>
                 </div>
-              )}
+
+                {/* ASSETS */}
+
+                {task?.assets.length > 0 && (
+                  <div className="space-y-4 py-6">
+                    <p className="text-lg font-semibold  dark:text-gray-200">
+                      ASSETS
+                    </p>
+
+                    <div className="w-full grid grid-cols-3 md:grid-cols-2 gap-4">
+                      {task?.assets?.map((el, index) => (
+                        <img
+                          src={el}
+                          key={index}
+                          alt={task?.title}
+                          className="w-full rounded h-28 md:h-36 2xl:h-52 cursor-pointer transition-all duration-700 hover:scale-125 hover:z-50"
+                        />
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </>
         ) : (
