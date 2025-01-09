@@ -38,6 +38,10 @@ app.use("/api", routes);
 app.use(routeNotFound);
 app.use(errorHandler);
 
+app.get("/", (req, res) => {
+  res.send("API WORKING");
+});
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
