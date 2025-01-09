@@ -16,12 +16,13 @@ dbConnection();
 connectCloudinary();
 
 const port = process.env.PORT || 3000;
+const allowedOrigins = ["http://localhost:3000", "http://taskme.vercel.app"];
 
 const app = express();
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: allowedOrigins,
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
@@ -34,13 +35,12 @@ app.use(cookieParser());
 app.use(morgan("dev"));
 
 app.use("/api", routes);
-
-app.use(routeNotFound);
-app.use(errorHandler);
-
 app.get("/", (req, res) => {
   res.send("API WORKING");
 });
+
+app.use(routeNotFound);
+app.use(errorHandler);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
