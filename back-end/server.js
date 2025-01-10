@@ -18,7 +18,7 @@ connectCloudinary();
 const port = process.env.PORT || 3000;
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://task-me-ten.vercel.app",
+  "https://task-me-xi.vercel.app",
 ];
 
 const app = express();
