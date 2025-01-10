@@ -12,6 +12,7 @@ import Table from "../components/Task/Table";
 import TaskTitle from "../components/TaskTitle";
 import Title from "../components/Title";
 import { useGetAllTaskQuery } from "../redux/slices/api/taskApiSlice";
+import { useSelector } from "react-redux";
 
 const TABS = [
   { title: "Board View", icon: <MdGridView /> },
@@ -25,6 +26,7 @@ const TASK_TYPE = {
 };
 
 function Tasks() {
+  const { user } = useSelector((state) => state.auth);
   const params = useParams();
 
   const [selected, setSelected] = useState(0);
@@ -47,7 +49,7 @@ function Tasks() {
       <div className="flex items-center justify-between mb-4">
         <Title title={status ? `${status} Tasks` : "Tasks"} />
 
-        {!status && (
+        {!status && user?.isAdmin && (
           <Button
             onClick={() => setOpen(true)}
             label="Create Task"
