@@ -27,7 +27,7 @@ router.post(
 router.post("/duplicate/:id", protectedRoute, isAdminRoute, duplicateTask);
 router.post("/activity/:id", protectedRoute, isAdminRoute, postTaskActivity);
 
-router.get("/dashboard", protectedRoute, dashboardStatistics);
+router.get("/dashboard", dashboardStatistics);
 router.get("/", protectedRoute, getTasks);
 router.get("/:id", protectedRoute, getTask);
 
