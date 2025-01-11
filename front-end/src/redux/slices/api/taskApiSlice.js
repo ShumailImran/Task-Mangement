@@ -39,10 +39,10 @@ export const taskApiSlice = apiSlice.injectEndpoints({
     }),
 
     updateTask: builder.mutation({
-      query: (data) => ({
-        url: `${TASK_URL}/update/${data._id}`,
+      query: ({ _id, formData }) => ({
+        url: `${TASK_URL}/update/${_id}`,
         method: "PUT",
-        body: data,
+        body: formData,
         credentials: "include",
       }),
     }),
