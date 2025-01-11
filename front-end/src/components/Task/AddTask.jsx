@@ -58,8 +58,8 @@ function AddTask({ open, setOpen, task, refetch }) {
       files.forEach((file) => formData.append("assets", file)); // Append new files
 
       const url = task?._id
-        ? `/api/tasks/update/${task._id}`
-        : `/api/tasks/create`;
+        ? `https://task-mangement-weld.vercel.app/api/tasks/update/${task._id}`
+        : `https://task-mangement-weld.vercel.app/api/tasks/create`;
 
       const response = await fetch(url, {
         method: task?._id ? "PUT" : "POST",
@@ -76,8 +76,6 @@ function AddTask({ open, setOpen, task, refetch }) {
 
       if (refetch) {
         refetch();
-      } else {
-        window.location.reload();
       }
       setOpen(false);
     } catch (error) {
