@@ -110,7 +110,7 @@ const TaskDialog = ({ task, isAdmin }) => {
 
           {/* Dropdown menu */}
           <div
-            className={`absolute z-50 right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 dark:divide-gray-800 rounded-md bg-white dark:bg-[#121212] shadow-lg ring-1 ring-black/5 focus:outline-none transform transition-all ${
+            className={`absolute z-10 right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 dark:divide-gray-800 rounded-md bg-white dark:bg-[#121212] shadow-lg ring-1 ring-black/5 focus:outline-none transform transition-all ${
               menuOpen
                 ? "opacity-100 scale-100 visible"
                 : "opacity-0 scale-95 invisible"

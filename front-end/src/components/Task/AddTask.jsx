@@ -57,25 +57,19 @@ function AddTask({ open, setOpen, task, refetch }) {
       formData.append("description", data.description);
       formData.append("team", JSON.stringify(team));
 
-      // Separate URLs and files
-      const urls = assets.filter((item) => typeof item === "string"); // Existing URLs
-      const files = assets.filter((item) => typeof item !== "string"); // New files
+      const urls = assets.filter((item) => typeof item === "string");
+      const files = assets.filter((item) => typeof item !== "string");
 
-      urls.forEach((url) => formData.append("assets", url)); // Append existing URLs
-      files.forEach((file) => formData.append("assets", file)); // Append new files
-
-      // Log formData content for debugging
-      console.log([...formData]);
+      urls.forEach((url) => formData.append("assets", url));
+      files.forEach((file) => formData.append("assets", file));
 
       let response;
       if (task?._id) {
-        // Update task
         response = await updateTask({
           _id: task._id,
           formData,
         }).unwrap();
       } else {
-        // Create new task
         response = await createTask(formData).unwrap();
       }
 
@@ -198,8 +192,8 @@ function AddTask({ open, setOpen, task, refetch }) {
             />
 
             {uploading ? (
-              <span className="text-sm py-2 text-red-500">
-                Uploading Assets
+              <span className="text-sm py-2 text-white bg-blue-700 border border-blue-700 px-6">
+                Submitting
               </span>
             ) : (
               // SUBMIT
