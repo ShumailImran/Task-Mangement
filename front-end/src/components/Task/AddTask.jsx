@@ -193,7 +193,7 @@ function AddTask({ open, setOpen, task, refetch }) {
               />
 
               {uploading ? (
-                <span className="text-sm py-2 text-red-500">
+                <span className="text-sm py-2 text-blue-500">
                   Uploading Assets
                 </span>
               ) : (
