@@ -58,8 +58,8 @@ function AddTask({ open, setOpen, task, refetch }) {
       files.forEach((file) => formData.append("assets", file)); // Append new files
 
       const url = task?._id
-        ? `${import.meta.VITE_APP_BASE_URL}/api/tasks/update/${task._id}`
-        : `${import.meta.VITE_APP_BASE_URL}/api/tasks/create`;
+        ? `/api/tasks/update/${task._id}`
+        : `/api/tasks/create`;
 
       const response = await fetch(url, {
         method: task?._id ? "PUT" : "POST",
@@ -193,7 +193,7 @@ function AddTask({ open, setOpen, task, refetch }) {
               />
 
               {uploading ? (
-                <span className="text-sm py-2 text-blue-500">
+                <span className="text-sm py-2 text-red-500">
                   Uploading Assets
                 </span>
               ) : (
