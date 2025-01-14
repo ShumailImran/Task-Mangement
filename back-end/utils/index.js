@@ -13,14 +13,13 @@ const dbConnection = async () => {
 export default dbConnection;
 
 export const createJWT = (res, userId) => {
-  const token = jwt.sign({ userId }, process.env.JWT_SECRET, {
-    expiresIn: "1d",
-  });
+  const token = jwt.sign({ userId }, process.env.JWT_SECRET);
 
   res.cookie("token", token, {
     httpOnly: true,
     secure: process.env.NODE_ENV !== "development",
     sameSite: process.env.NODE_ENV !== "development" ? "none" : "strict", // PREVENT CSRF ATTACK
-    maxAge: 24 * 60 * 60 * 1000, // 1 DAY
   });
+
+  console.log("Cookie set", res.getHeader("Set-Cookie"));
 };

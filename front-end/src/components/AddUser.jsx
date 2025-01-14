@@ -29,7 +29,9 @@ const AddUser = ({ open, setOpen, userData, refetch }) => {
       if (userData) {
         const result = await updateUser(data).unwrap();
 
-        refetch();
+        if (refetch) {
+          refetch();
+        }
 
         toast.success("User updated successfully");
 
