@@ -18,7 +18,8 @@ export const createJWT = (res, userId) => {
   res.cookie("token", token, {
     httpOnly: true,
     secure: process.env.NODE_ENV !== "development",
-    sameSite: process.env.NODE_ENV !== "development" ? "none" : "strict", // PREVENT CSRF ATTACK
+    sameSite: process.env.NODE_ENV !== "development" ? "none" : "strict",
+    expires: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000),
   });
 
   console.log("Cookie set", res.getHeader("Set-Cookie"));

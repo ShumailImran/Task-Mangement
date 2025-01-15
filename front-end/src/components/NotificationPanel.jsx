@@ -20,23 +20,21 @@ const ICONS = {
 };
 
 const NotificationPanel = () => {
-  const [open, setOpen] = useState(false); // Controls the state of the notification panel
-  const [selected, setSelected] = useState(null); // Stores the selected notification for viewing
+  const [open, setOpen] = useState(false);
+  const [selected, setSelected] = useState(null);
   const { data, refetch } = useGetNotificationQuery();
   const [markAsRead] = useMarkNotiAsReadMutation();
 
-  // Mark a notification as read, and close the popover if needed
   const readHandler = async (type, id, closePopover) => {
     await markAsRead({ type, id }).unwrap();
     refetch();
     if (closePopover) closePopover();
   };
 
-  // Handle viewing a specific notification
   const viewHandler = async (el) => {
-    setSelected(el); // Set the selected notification for viewing
-    readHandler("one", el._id); // Mark it as read
-    setOpen(true); // Open the modal to view the notification details
+    setSelected(el);
+    readHandler("one", el._id);
+    setOpen(true);
   };
 
   // Action buttons in the notification panel
@@ -55,7 +53,7 @@ const NotificationPanel = () => {
       <div className="relative">
         <button
           className="inline-flex items-center outline-none"
-          onClick={() => setOpen((prev) => !prev)} // Toggle the visibility of the notification panel
+          onClick={() => setOpen((prev) => !prev)}
         >
           <div className="w-8 h-8 flex items-center justify-center text-gray-800 dark:text-gray-300 relative">
             <IoIosNotificationsOutline className="text-2xl" />
@@ -118,7 +116,6 @@ const NotificationPanel = () => {
         )}
       </div>
 
-      {/* ViewNotification Component */}
       {selected && (
         <ViewNotification open={open} setOpen={setOpen} el={selected} />
       )}

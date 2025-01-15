@@ -55,16 +55,16 @@ function PieChartComponent({ data }) {
             <Cell
               key={`cell-${index}`}
               fill={entry.color}
-              stroke={strokeColor} // Set dynamic stroke color
+              stroke={strokeColor}
               strokeWidth={1}
             />
           ))}
         </Pie>
         <Tooltip height={60} />
         <Legend
-          layout="horizontal" // Set to horizontal layout
-          iconType="circle" // Square icons for colors
-          iconSize={10} // Adjust the size of the color icon
+          layout="horizontal"
+          iconType="circle"
+          iconSize={10}
           wrapperStyle={{
             paddingTop: 10,
             fontSize: "16px",

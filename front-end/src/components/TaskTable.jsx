@@ -31,22 +31,26 @@ const TaskTable = ({ tasks }) => {
     <tr className=" border-b border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:bg-gray-300/10 dark:hover:bg-gray-700/10 ">
       <td className=" py-2">
         <div className="flex items-center gap-2">
-          <div className={`w-4 h-4 rounded-full ${TASK_TYPE[task.stage]}`} />
+          <div
+            className={`w-4 h-4 flex-shrink-0 rounded-full ${
+              TASK_TYPE[task.stage]
+            }`}
+          />
 
           <p className="text-base text-black dark:text-white">{task.title}</p>
         </div>
       </td>
 
-      <td className="py-2">
+      <td className="py-2 pr-4">
         <div className="flex gap-1 items-center">
           <span className={`text-lg ${PRIORITY_STYLES[task.priority]}`}>
             {ICONS[task.priority]}
           </span>
-          <span className="capitalize">{task.priority}</span>
+          <span className="uppercase">{task.priority}</span>
         </div>
       </td>
 
-      <td className="py-2">
+      <td className="py-2 pr-4">
         <div className="flex">
           {task.team.map((m, index) => (
             <div

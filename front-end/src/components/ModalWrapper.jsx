@@ -3,7 +3,6 @@ import { useEffect, useRef } from "react";
 function ModalWrapper({ open, setOpen, children }) {
   const cancelButtonRef = useRef(null);
 
-  // Close the modal on Escape key press
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === "Escape") setOpen(false);
@@ -12,7 +11,6 @@ function ModalWrapper({ open, setOpen, children }) {
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [setOpen]);
 
-  // Prevent scrolling when the modal is open
   useEffect(() => {
     if (open) {
       document.body.style.overflow = "hidden";

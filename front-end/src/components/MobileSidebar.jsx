@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 const MobileSidebar = () => {
   const { isSidebarOpen } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const [closing, setClosing] = useState(false); // Manages the closing animation
+  const [closing, setClosing] = useState(false);
 
   // Close sidebar with animation
   const closeSidebar = () => {

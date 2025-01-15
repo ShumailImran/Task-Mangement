@@ -100,7 +100,7 @@ function Users() {
     <tr className="border-b  hover:bg-gray-400/10 dark:hover:bg-gray-700/50">
       <td className="py-2 text-left pr-4">
         <div className="flex items-center gap-3">
-          <div className="w-7 h-7 rounded-full  flex items-center justify-center text-sm bg-blue-700">
+          <div className="w-7 h-7 flex-shrink-0 rounded-full  flex items-center justify-center text-sm bg-blue-700">
             <span className="text-xs text-white font-semibold ms:text-sm text-center">
               {getInitials(user?.name)}
             </span>
@@ -126,21 +126,21 @@ function Users() {
         </button>
       </td>
 
-      <td className="p-2 flex gap-[-4] md:gap-4 justify-end">
-        <Button
-          className="text-blue-600 hover:text-blue-500 font-semibold sm:px-1"
-          // label="Edit"
-          icon={<MdEdit className="text-lg " />}
-          type="button"
-          onClick={() => editClick(user)}
-        />
+      <td>
+        <div className="flex gap-2 ml-2">
+          <Button
+            className="text-blue-600 hover:text-blue-500 font-semibold sm:px-1"
+            icon={<MdEdit className="text-lg " />}
+            type="button"
+            onClick={() => editClick(user)}
+          />
 
-        <Button
-          className="text-gray-600 dark:text-white/90 hover:text-red-500 font-semibold sm:px-1"
-          // label="Delete"
-          icon={<MdDelete className="text-lg " />}
-          onClick={() => deleteClick(user?._id)}
-        />
+          <Button
+            className="text-gray-600 dark:text-white/90 hover:text-red-500 font-semibold sm:px-1"
+            icon={<MdDelete className="text-lg " />}
+            onClick={() => deleteClick(user?._id)}
+          />
+        </div>
       </td>
     </tr>
   );

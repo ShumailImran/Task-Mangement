@@ -16,7 +16,6 @@ function Chart({ data }) {
         <YAxis />
         <Tooltip cursor={{ fill: "transparent" }} />
         <Legend />
-        {/* <CartesianGrid strokeDasharray="3 3" /> */}
         <Bar dataKey="total" fill="#8884d8" barSize={85} />
       </BarChart>
     </ResponsiveContainer>

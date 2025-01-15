@@ -14,7 +14,7 @@ import AddSubTask from "./AddSubTask";
 import AddTask from "./AddTask";
 import { toast } from "sonner";
 
-const TaskDialog = ({ task, isAdmin }) => {
+const TaskDialog = ({ task, isAdmin, refetch }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [open, setOpen] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
@@ -32,7 +32,7 @@ const TaskDialog = ({ task, isAdmin }) => {
 
       setTimeout(() => {
         setOpenDialog(false);
-        window.location.reload();
+        refetch();
       }, 500);
     } catch (error) {
       console.log(error);
@@ -55,7 +55,7 @@ const TaskDialog = ({ task, isAdmin }) => {
 
       setTimeout(() => {
         setOpenDialog(false);
-        window.location.reload();
+        refetch();
       }, 500);
     } catch (error) {
       console.log(error);

@@ -26,7 +26,7 @@ const ICONS = {
   low: <MdKeyboardArrowDown />,
 };
 
-function Table({ tasks }) {
+function Table({ tasks, refetch, user }) {
   const [openDialog, setOpenDialog] = useState(false);
   const [selected, setSelected] = useState(null);
   const [openEdit, setOpenEdit] = useState(false);
@@ -54,7 +54,7 @@ function Table({ tasks }) {
 
       setTimeout(() => {
         setOpenDialog(false);
-        window.location.reload();
+        refetch();
       }, 500);
     } catch (error) {
       console.log(error);
@@ -80,11 +80,11 @@ function Table({ tasks }) {
       <td className="py-2 pr-4">
         <div className="flex items-center gap-1">
           <div
-            className={`w-2 h-2 md:w-3 md:h-3 rounded-full ${
+            className={`w-4 h-4 flex-shrink-0 rounded-full ${
               TASK_TYPE[task.stage]
             }`}
           />
-          <p className="w-full  text-base ">{task?.title}</p>
+          <p className="w-full text-base ">{task?.title}</p>
         </div>
       </td>
 
@@ -143,23 +143,24 @@ function Table({ tasks }) {
 
       {/* BUTTON */}
 
-      <td className="py-2 flex gap-[-4] md:gap-4 justify-end">
-        <Button
-          className="text-blue-600 hover:text-blue-500 py-10 text-sm md:text-base"
-          // label="Edit"
-          icon={<MdEdit className="text-lg " />}
-          type="button"
-          onClick={() => editTaskHandler(task)}
-        />
-
-        <Button
-          className="text-gray-600 dark:text-white/90  hover:text-red-500 dark:hover:text-red-500 sm:px-1 text-sm md:text-base"
-          // label="Delete"
-          icon={<MdDelete className="text-lg " />}
-          type="button"
-          onClick={() => deleteClicks(task._id)}
-        />
-      </td>
+      {user?.isAdmin && (
+        <td className="py-2">
+          <div className="flex">
+            <Button
+              className="text-blue-600 hover:text-blue-500 py-10 text-sm md:text-base flex items-center"
+              icon={<MdEdit className="text-lg " />}
+              type="button"
+              onClick={() => editTaskHandler(task)}
+            />
+            <Button
+              className="text-gray-600 dark:text-white/90  hover:text-red-500 dark:hover:text-red-500 sm:px-1 text-sm md:text-base"
+              icon={<MdDelete className="text-lg " />}
+              type="button"
+              onClick={() => deleteClicks(task._id)}
+            />
+          </div>
+        </td>
+      )}
     </tr>
   );
 

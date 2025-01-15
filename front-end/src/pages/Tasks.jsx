@@ -72,10 +72,10 @@ function Tasks() {
         )}
 
         {selected !== 1 ? (
-          <BoardView tasks={data?.tasks} />
+          <BoardView tasks={data?.tasks} refetch={refetch} />
         ) : (
           <div className="w-full">
-            <Table tasks={data?.tasks} />
+            <Table tasks={data?.tasks} refetch={refetch} user={user} />
           </div>
         )}
       </Tabs>

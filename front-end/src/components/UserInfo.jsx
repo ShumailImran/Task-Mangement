@@ -25,7 +25,7 @@ function UserInfo({ user }) {
         }`}
       >
         <div className="flex items-center gap-4 rounded-lg shadow-lg bg-white dark:bg-[#121212] p-4">
-          <div className="w-16 h-16 bg-blue-600 rounded-full text-white font-bold flex items-center justify-center text-2xl">
+          <div className="w-16 h-16 flex-shrink-0 bg-blue-600 rounded-full text-white font-bold flex items-center justify-center text-2xl">
             <span>{getInitials(user?.name)}</span>
           </div>
           <div className="flex flex-col gap-y-1">

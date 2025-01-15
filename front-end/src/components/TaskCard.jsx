@@ -22,7 +22,7 @@ const ICONS = {
   low: <MdKeyboardArrowDown />,
 };
 
-function TaskCard({ task }) {
+function TaskCard({ task, refetch }) {
   const { user } = useSelector((state) => state.auth);
   const [open, setOpen] = useState(false);
 
@@ -41,13 +41,17 @@ function TaskCard({ task }) {
 
           {/* TaskDialog Button */}
           <div className="relative">
-            <TaskDialog task={task} isAdmin={user.isAdmin} />
+            <TaskDialog task={task} isAdmin={user.isAdmin} refetch={refetch} />
           </div>
         </div>
 
         <>
           <div className="flex items-center gap-2">
-            <div className={`w-4 h-4 rounded-full ${TASK_TYPE[task.stage]}`} />
+            <div
+              className={`w-4 h-4 flex-shrink-0 rounded-full ${
+                TASK_TYPE[task.stage]
+              }`}
+            />
             <h4 className="line-clamp-1 text-black dark:text-white">
               {task?.title}
             </h4>

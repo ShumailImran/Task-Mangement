@@ -21,7 +21,7 @@ router.post(
   "/create",
   protectedRoute,
   isAdminRoute,
-  upload.array("assets", 4), // Make sure this line is here and the key matches
+  upload.array("assets", 4),
   createTask
 );
 router.post("/duplicate/:id", protectedRoute, isAdminRoute, duplicateTask);
