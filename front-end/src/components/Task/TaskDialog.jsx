@@ -144,6 +144,7 @@ const TaskDialog = ({ task, isAdmin, refetch }) => {
         open={openEdit}
         setOpen={setOpenEdit}
         task={task}
+        refetch={refetch}
         key={new Date().getTime()}
       />
 
