@@ -15,11 +15,17 @@ const Login = () => {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm();
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [login, { isLoading }] = useLoginMutation();
+
+  useEffect(() => {
+    setValue("email", "demouser@gmail.com");
+    setValue("password", "345demo9078");
+  }, [setValue]);
 
   const submitHandler = async (data) => {
     try {
