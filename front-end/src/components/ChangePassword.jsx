@@ -5,8 +5,10 @@ import ModalWrapper from "./ModalWrapper";
 import Textbox from "./Textbox";
 import Loader from "./Loader";
 import Button from "./Button";
+import { useSelector } from "react-redux";
 
 function ChangePassword({ open, setOpen }) {
+  const { user } = useSelector((state) => state.auth);
   const {
     register,
     handleSubmit,
@@ -16,6 +18,10 @@ function ChangePassword({ open, setOpen }) {
   const [changeUserPassword, { isLoading }] = useChangePasswordMutation();
 
   const handleOnSubmit = async (data) => {
+    if (user.email === "demouser@gmail.com") {
+      toast.error("Demo user can't change password");
+      return;
+    }
     if (data.password !== data.cpass) {
       toast.warning("Password doesn't match");
       return;

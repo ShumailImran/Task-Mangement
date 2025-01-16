@@ -26,6 +26,10 @@ const AddUser = ({ open, setOpen, userData, refetch }) => {
 
   const handleOnSubmit = async (data) => {
     try {
+      if (user.email === "demouser@gmail.com") {
+        toast.error("Demo user can't update profile.");
+        return;
+      }
       if (userData) {
         const result = await updateUser(data).unwrap();
 
