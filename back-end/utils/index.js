@@ -19,6 +19,7 @@ export const createJWT = (res, userId) => {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production" ? true : false,
     sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    domain: process.env.NODE_ENV === "production" ? ".vercel.app" : undefined,
     expires: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000),
   });
 
