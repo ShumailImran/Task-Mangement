@@ -18,7 +18,7 @@ export const createJWT = (res, userId) => {
   res.cookie("token", token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
-    sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
-    maxAge: 1000 * 60 * 60 * 24 * 365,
+    sameSite: "none", // Set to "none" for cross-site cookies
+    maxAge: 1000 * 60 * 60 * 24 * 365, // One year
   });
 };
