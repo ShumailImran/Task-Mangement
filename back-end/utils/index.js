@@ -17,7 +17,7 @@ export const createJWT = (res, userId) => {
 
   res.cookie("token", token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    secure: process.env.NODE_ENV === "production" ? true : false,
     sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
     expires: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000),
   });
