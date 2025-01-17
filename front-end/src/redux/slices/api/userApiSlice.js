@@ -9,6 +9,9 @@ export const userApiSlice = apiSlice.injectEndpoints({
         url: `${USER_URL}/profile`,
         method: "PUT",
         body: data,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
         credentials: "include",
       }),
     }),
@@ -17,6 +20,9 @@ export const userApiSlice = apiSlice.injectEndpoints({
       query: () => ({
         url: `${USER_URL}/get-team`,
         method: "GET",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
         credentials: "include",
       }),
     }),
@@ -25,6 +31,9 @@ export const userApiSlice = apiSlice.injectEndpoints({
       query: (id) => ({
         url: `${USER_URL}/${id}`,
         method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
         credentials: "include",
       }),
     }),
@@ -34,6 +43,9 @@ export const userApiSlice = apiSlice.injectEndpoints({
         url: `${USER_URL}/${data.id}`,
         method: "PUT",
         body: data,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
         credentials: "include",
       }),
     }),
@@ -42,6 +54,9 @@ export const userApiSlice = apiSlice.injectEndpoints({
       query: () => ({
         url: `${USER_URL}/notification`,
         method: "GET",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
         credentials: "include",
       }),
     }),
@@ -51,6 +66,9 @@ export const userApiSlice = apiSlice.injectEndpoints({
         url: `${USER_URL}/read-noti?isReadType=${data.type}&id=${data?.id}`,
         method: "PUT",
         body: data,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
         credentials: "include",
       }),
     }),
@@ -60,6 +78,9 @@ export const userApiSlice = apiSlice.injectEndpoints({
         url: `${USER_URL}/change-password`,
         method: "PUT",
         body: data,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
         credentials: "include",
       }),
     }),

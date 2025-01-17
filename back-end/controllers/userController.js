@@ -1,256 +1,201 @@
+import asyncHandler from "express-async-handler";
 import Notification from "../models/notificationModel.js";
 import User from "../models/userModel.js";
 import { createJWT } from "../utils/index.js";
 
-// // // // // REGISTER_USER // // // // //
+// // // REGISTER_USER // // //
+export const registerUser = asyncHandler(async (req, res) => {
+  const { name, email, password, isAdmin, role, title } = req.body;
 
-export const registerUser = async (req, res) => {
-  try {
-    const { name, email, password, isAdmin, role, title } = req.body;
+  const userExist = await User.findOne({ email });
+  if (userExist) {
+    res.status(400).json({ status: false, message: "User already exists" });
+    return;
+  }
 
-    const userExist = await User.findOne({ email });
+  const user = await User.create({
+    name,
+    email,
+    password,
+    isAdmin,
+    role,
+    title,
+  });
 
-    if (userExist) {
-      return res
-        .status(400)
-        .json({ status: false, message: "User already exist" });
-    }
+  if (user) {
+    const token = createJWT(user._id); // Create token for localStorage
+    user.password = undefined;
 
-    const user = await User.create({
-      name,
-      email,
-      password,
-      isAdmin,
-      role,
-      title,
+    res.status(201).json({
+      status: true,
+      message: "User registered successfully",
+      user,
+      token, // Send the token in response
     });
-
-    if (user) {
-      isAdmin ? createJWT(res, user._id) : null;
-
-      user.password = undefined;
-      return res.status(201).json({ status: true, user });
-    } else {
-      return res.status(400).json({ status: false, message: "Invalid user" });
-    }
-  } catch (error) {
-    return res.status(400).json({ message: error.message });
+  } else {
+    res.status(400).json({ status: false, message: "Failed to register user" });
   }
-};
+});
 
-// // // // // LOGIN_USER // // // // //
+// // // LOGIN_USER // // //
+export const loginUser = asyncHandler(async (req, res) => {
+  const { email, password } = req.body;
 
-export const loginUser = async (req, res) => {
-  try {
-    const { email, password } = req.body;
-
-    const user = await User.findOne({ email });
-
-    if (!user) {
-      return res
-        .status(401)
-        .json({ status: false, message: "Invalid email or password." });
-    }
-
-    if (!user?.isActive) {
-      return res.status(401).json({
-        status: false,
-        message: "User account has been deactivated, contact the administrator",
-      });
-    }
-
-    const isMatch = await user.matchPassword(password);
-
-    if (user && isMatch) {
-      createJWT(res, user._id);
-
-      user.password = undefined;
-
-      res.status(200).json(user);
-    } else {
-      return res
-        .status(401)
-        .json({ status: false, message: "Invalid email or password" });
-    }
-  } catch (error) {
-    console.log(error);
-    return res.status(400).json({ status: false, message: error.message });
-  }
-};
-
-// // // // // LOGOUT_USER // // // // //
-
-export const logoutUser = async (req, res) => {
-  try {
-    res.cookie("token", null, {
-      httpOnly: true,
-      expires: new Date(0),
-    });
-
-    res.status(200).json({ status: true, message: "Logged out successfully" });
-  } catch (error) {
-    return res.status(400).json({ status: false, message: error.message });
-  }
-};
-
-// // // // // GET_TEAM_LISTS // // // // //
-
-export const getTeamList = async (req, res) => {
-  try {
-    const users = await User.find().select("name title email role isActive");
-
-    res.status(200).json({ users });
-  } catch (error) {
-    return res.status(400).json({ status: false, message: error.message });
-  }
-};
-
-// // // // // GET_NOTIFICATIONS_LIST  // // // // //
-
-export const getNotificationList = async (req, res) => {
-  try {
-    const { userId } = req.user;
-
-    const notification = await Notification.find({
-      team: userId,
-      isRead: { $nin: [userId] },
-    }).populate("task", "title");
-
-    res.status(201).json({ notification });
-  } catch (error) {
-    return res.status(400).json({ status: false, message: error.message });
-  }
-};
-
-// // // // // UPDATE_USER_PROFILE // // // // //
-
-export const updateUserProfile = async (req, res) => {
-  try {
-    const { userId, isAdmin } = req.user;
-    const { _id } = req.body;
-
-    const id =
-      isAdmin && userId === _id
-        ? userId
-        : isAdmin && userId !== _id
-        ? _id
-        : userId;
-
-    const user = await User.findById(id);
-
-    if (user) {
-      user.name = req.body.name || user.name;
-      user.title = req.body.title || user.title;
-      user.role = req.body.role || user.role;
-
-      const updatedUser = await user.save();
-      user.password = undefined;
-
-      res.status(201).json({
-        status: true,
-        message: "Profile updated successfully",
-        user: updatedUser,
-      });
-    } else {
-      res.status(404).json({ status: false, message: "User not found" });
-    }
-  } catch (error) {
-    return res.status(400).json({ status: false, message: error.message });
-  }
-};
-
-// // // // // MARK_NOTIFICATION_READ // // // // //
-
-export const markNotificationRead = async (req, res) => {
-  try {
-    const { userId } = req.user;
-    const { isReadType, id } = req.query;
-
-    if (isReadType === "all") {
-      await Notification.updateMany(
-        { team: userId, isRead: { $nin: [userId] } },
-        { $push: { isRead: userId } },
-        { new: true }
-      );
-    } else {
-      await Notification.findOneAndUpdate(
-        { _id: id, isRead: { $nin: [userId] } },
-        { $push: { isRead: userId } },
-        { new: true }
-      );
-    }
-    res.status(201).json({ status: true, message: "Done" });
-  } catch (error) {
-    return res.status(400).json({ status: false, message: error.message });
-  }
-};
-
-// // // // // CHANGE_USER_PASSWORD // // // // //
-
-export const changeUserPassword = async (req, res) => {
-  try {
-    const { userId } = req.user;
-
-    const user = await User.findById(userId);
-
-    if (user) {
-      user.password = req.body.password;
-
-      await user.save();
-
-      user.password = undefined;
-
-      res.status(200).json({
-        status: true,
-        message: "Password updated successfully",
-        user: user,
-      });
-    } else {
-      res.status(404).json({ status: false, message: error.message });
-    }
-  } catch (error) {
-    return res.status(400).json({ status: false, message: error.message });
-  }
-};
-
-// // // // // ACTIVATE_USER_PROFILE // // // // //
-export const activateUserProfile = async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    const user = await User.findById(id);
-
-    if (user) {
-      user.isActive = req.body.isActive; // !user.isActive
-
-      await user.save();
-
-      res.status(200).json({
-        status: true,
-        message: `User account has been ${
-          user?.isActive ? "activated" : "disabled"
-        } successfully`,
-      });
-    } else {
-      res.status(404).json({ status: false, message: error.message });
-    }
-  } catch (error) {
-    return res.status(400).json({ status: false, message: error.message });
-  }
-};
-
-// // // // // DELETE_USER_PROFILE // // // // //
-
-export const deleteUserProfile = async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    await User.findByIdAndDelete(id);
-
+  const user = await User.findOne({ email });
+  if (!user || !(await user.matchPassword(password))) {
     res
-      .status(200)
-      .json({ status: true, message: "User deleted successfully" });
-  } catch (error) {
-    return res.status(400).json({ status: false, message: error.message });
+      .status(401)
+      .json({ status: false, message: "Invalid email or password" });
+    return;
   }
-};
+
+  if (!user.isActive) {
+    res.status(403).json({
+      status: false,
+      message: "Account is deactivated. Contact the administrator.",
+    });
+    return;
+  }
+
+  const token = createJWT(user._id); // Create token for localStorage
+  user.password = undefined;
+
+  res.status(200).json({
+    status: true,
+    message: "Login successful",
+    user,
+    token, // Send the token in response
+  });
+});
+
+// // // LOGOUT_USER // // //
+export const logoutUser = asyncHandler(async (req, res) => {
+  res.cookie("token", null, {
+    httpOnly: true,
+    expires: new Date(0),
+  });
+
+  res.status(200).json({ status: true, message: "Logged out successfully" });
+});
+
+// // // GET_TEAM_LIST // // //
+export const getTeamList = asyncHandler(async (req, res) => {
+  const users = await User.find().select("name title email role isActive");
+  res.status(200).json({ status: true, users });
+});
+
+// // // GET_NOTIFICATIONS_LIST // // //
+export const getNotificationList = asyncHandler(async (req, res) => {
+  const { userId } = req.user;
+
+  const notification = await Notification.find({
+    team: userId,
+    isRead: { $nin: [userId] },
+  }).populate("task", "title");
+
+  res.status(200).json({ status: true, notification });
+});
+
+// // // UPDATE_USER_PROFILE // // //
+export const updateUserProfile = asyncHandler(async (req, res) => {
+  const { userId, isAdmin } = req.user;
+  const { _id } = req.body;
+
+  const id = isAdmin && userId !== _id ? _id : userId;
+
+  const user = await User.findById(id);
+  if (!user) {
+    res.status(404).json({ status: false, message: "User not found" });
+    return;
+  }
+
+  user.name = req.body.name || user.name;
+  user.title = req.body.title || user.title;
+  user.role = req.body.role || user.role;
+
+  const updatedUser = await user.save();
+  updatedUser.password = undefined;
+
+  res.status(200).json({
+    status: true,
+    message: "Profile updated successfully",
+    user: updatedUser,
+  });
+});
+
+// // // MARK_NOTIFICATION_READ // // //
+export const markNotificationRead = asyncHandler(async (req, res) => {
+  const { userId } = req.user;
+  const { isReadType, id } = req.query;
+
+  if (isReadType === "all") {
+    await Notification.updateMany(
+      { team: userId, isRead: { $nin: [userId] } },
+      { $push: { isRead: userId } },
+      { new: true }
+    );
+  } else {
+    await Notification.findOneAndUpdate(
+      { _id: id, isRead: { $nin: [userId] } },
+      { $push: { isRead: userId } },
+      { new: true }
+    );
+  }
+
+  res
+    .status(200)
+    .json({ status: true, message: "Notifications marked as read" });
+});
+
+// // // CHANGE_USER_PASSWORD // // //
+export const changeUserPassword = asyncHandler(async (req, res) => {
+  const { userId } = req.user;
+
+  const user = await User.findById(userId);
+  if (!user) {
+    res.status(404).json({ status: false, message: "User not found" });
+    return;
+  }
+
+  user.password = req.body.password;
+  await user.save();
+
+  res.status(200).json({
+    status: true,
+    message: "Password updated successfully",
+  });
+});
+
+// // // ACTIVATE_USER_PROFILE // // //
+export const activateUserProfile = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+
+  const user = await User.findById(id);
+  if (!user) {
+    res.status(404).json({ status: false, message: "User not found" });
+    return;
+  }
+
+  user.isActive = req.body.isActive;
+  await user.save();
+
+  res.status(200).json({
+    status: true,
+    message: `User account has been ${
+      user.isActive ? "activated" : "deactivated"
+    } successfully`,
+  });
+});
+
+// // // DELETE_USER_PROFILE // // //
+export const deleteUserProfile = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+
+  const user = await User.findByIdAndDelete(id);
+  if (!user) {
+    res.status(404).json({ status: false, message: "User not found" });
+    return;
+  }
+
+  res.status(200).json({ status: true, message: "User deleted successfully" });
+});

@@ -12,13 +12,9 @@ const dbConnection = async () => {
 
 export default dbConnection;
 
-export const createJWT = (res, userId) => {
-  const token = jwt.sign({ userId }, process.env.JWT_SECRET);
-
-  res.cookie("token", token, {
-    httpOnly: true,
-    secure: true,
-    sameSite: "none", // Set to "none" for cross-site cookies
-    maxAge: 1000 * 60 * 60 * 24 * 365, // One year
+export const createJWT = (userId) => {
+  // Generate the token
+  return jwt.sign({ userId }, process.env.JWT_SECRET, {
+    expiresIn: "1y", // Adjust as needed
   });
 };
