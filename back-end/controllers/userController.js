@@ -23,14 +23,14 @@ export const registerUser = asyncHandler(async (req, res) => {
   });
 
   if (user) {
-    const token = createJWT(user._id); // Create token for localStorage
+    const token = createJWT(user._id);
     user.password = undefined;
 
     res.status(201).json({
       status: true,
       message: "User registered successfully",
       user,
-      token, // Send the token in response
+      token,
     });
   } else {
     res.status(400).json({ status: false, message: "Failed to register user" });
@@ -57,14 +57,14 @@ export const loginUser = asyncHandler(async (req, res) => {
     return;
   }
 
-  const token = createJWT(user._id); // Create token for localStorage
+  const token = createJWT(user._id);
   user.password = undefined;
 
   res.status(200).json({
     status: true,
     message: "Login successful",
     user,
-    token, // Send the token in response
+    token,
   });
 });
 

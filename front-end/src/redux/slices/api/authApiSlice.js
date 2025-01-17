@@ -9,33 +9,19 @@ export const authApiSlice = apiSlice.injectEndpoints({
         url: `${AUTH_URL}/login`,
         method: "POST",
         body: data,
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        credentials: "include",
       }),
     }),
-
     register: builder.mutation({
       query: (data) => ({
         url: `${AUTH_URL}/register`,
         method: "POST",
         body: data,
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        credentials: "include",
       }),
     }),
-
     logout: builder.mutation({
       query: () => ({
         url: `${AUTH_URL}/logout`,
         method: "POST",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        credentials: "include",
       }),
     }),
   }),

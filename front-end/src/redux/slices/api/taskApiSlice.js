@@ -8,10 +8,6 @@ export const taskApiSlice = apiSlice.injectEndpoints({
       query: () => ({
         url: `${TASK_URL}/dashboard`,
         method: "GET",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        credentials: "include",
       }),
     }),
 
@@ -19,10 +15,6 @@ export const taskApiSlice = apiSlice.injectEndpoints({
       query: ({ strQuery, isTrashed, search }) => ({
         url: `${TASK_URL}?stage=${strQuery}&isTrashed=${isTrashed}&search=${search}`,
         method: "GET",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        credentials: "include",
       }),
     }),
 
@@ -31,10 +23,6 @@ export const taskApiSlice = apiSlice.injectEndpoints({
         url: `${TASK_URL}/create`,
         method: "POST",
         body: data,
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        credentials: "include",
       }),
     }),
 
@@ -43,10 +31,6 @@ export const taskApiSlice = apiSlice.injectEndpoints({
         url: `${TASK_URL}/duplicate/${id}`,
         method: "POST",
         body: {},
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        credentials: "include",
       }),
     }),
 
@@ -55,10 +39,6 @@ export const taskApiSlice = apiSlice.injectEndpoints({
         url: `${TASK_URL}/update/${_id}`,
         method: "PUT",
         body: formData,
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        credentials: "include",
       }),
     }),
 
@@ -66,10 +46,6 @@ export const taskApiSlice = apiSlice.injectEndpoints({
       query: ({ id }) => ({
         url: `${TASK_URL}/${id}`,
         method: "PUT",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        credentials: "include",
       }),
     }),
 
@@ -78,10 +54,6 @@ export const taskApiSlice = apiSlice.injectEndpoints({
         url: `${TASK_URL}/create-subtask/${id}`,
         method: "PUT",
         body: data,
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        credentials: "include",
       }),
     }),
 
@@ -89,10 +61,6 @@ export const taskApiSlice = apiSlice.injectEndpoints({
       query: (id) => ({
         url: `${TASK_URL}/${id}`,
         method: "GET",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        credentials: "include",
       }),
     }),
 
@@ -101,10 +69,6 @@ export const taskApiSlice = apiSlice.injectEndpoints({
         url: `${TASK_URL}/activity/${id}`,
         method: "POST",
         body: data,
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        credentials: "include",
       }),
     }),
 
@@ -112,10 +76,6 @@ export const taskApiSlice = apiSlice.injectEndpoints({
       query: ({ id, actionType }) => ({
         url: `${TASK_URL}/delete-restore/${id}?actionType=${actionType}`,
         method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        credentials: "include",
       }),
     }),
   }),
@@ -124,16 +84,12 @@ export const taskApiSlice = apiSlice.injectEndpoints({
 export const {
   useGetDashboardStatsQuery,
   useGetAllTaskQuery,
-
   useCreateTaskMutation,
   useDuplicateTaskMutation,
   useUpdateTaskMutation,
   useTrashTaskMutation,
-
   useCreateSubTaskMutation,
-
   useGetSingleTaskQuery,
   usePostTaskActivityMutation,
-
   useDeleteRestoreTaskMutation,
 } = taskApiSlice;

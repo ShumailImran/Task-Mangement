@@ -146,7 +146,6 @@ function TaskDetails() {
                     <span>{task?.subTasks?.length}</span>
                   </div>
                 </div>
-                {/* Description */}
 
                 {/* TEAM */}
 
