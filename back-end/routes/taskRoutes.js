@@ -19,32 +19,31 @@ const router = express.Router();
 
 router.post(
   "/create",
-
+  protectedRoute,
   isAdminRoute,
   upload.array("assets", 4),
-
   createTask
 );
-router.post("/duplicate/:id", isAdminRoute, duplicateTask);
-router.post("/activity/:id", postTaskActivity);
+router.post("/duplicate/:id", protectedRoute, isAdminRoute, duplicateTask);
+router.post("/activity/:id", protectedRoute, postTaskActivity);
 
-router.get("/dashboard", dashboardStatistics);
-router.get("/", getTasks);
-router.get("/:id", getTask);
+router.get("/dashboard", protectedRoute, dashboardStatistics);
+router.get("/", protectedRoute, getTasks);
+router.get("/:id", protectedRoute, getTask);
 
-router.put("/create-subtask/:id", isAdminRoute, createSubTask);
+router.put("/create-subtask/:id", protectedRoute, isAdminRoute, createSubTask);
 router.put(
   "/update/:id",
-
+  protectedRoute,
   isAdminRoute,
   upload.array("assets", 4),
   updateTask
 );
-router.put("/:id", isAdminRoute, trashTask);
+router.put("/:id", protectedRoute, isAdminRoute, trashTask);
 
 router.delete(
   "/delete-restore/:id?",
-
+  protectedRoute,
   isAdminRoute,
   deleteRestoreTask
 );
