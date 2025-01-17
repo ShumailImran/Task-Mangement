@@ -18,17 +18,17 @@ router.post("/register", registerUser);
 router.post("/login", loginUser);
 router.post("/logout", logoutUser);
 
-router.get("/get-team", protectedRoute, isAdminRoute, getTeamList);
-router.get("/notification", protectedRoute, getNotificationList);
+router.get("/get-team", isAdminRoute, getTeamList);
+router.get("/notification", getNotificationList);
 
-router.put("/profile", protectedRoute, updateUserProfile);
-router.put("/read-noti", protectedRoute, markNotificationRead);
-router.put("/change-password", protectedRoute, changeUserPassword);
+router.put("/profile", updateUserProfile);
+router.put("/read-noti", markNotificationRead);
+router.put("/change-password", changeUserPassword);
 
 // // FOR ADMIN ONLY
 router
   .route("/:id")
-  .put(protectedRoute, isAdminRoute, activateUserProfile)
-  .delete(protectedRoute, isAdminRoute, deleteUserProfile);
+  .put(isAdminRoute, activateUserProfile)
+  .delete(isAdminRoute, deleteUserProfile);
 
 export default router;
