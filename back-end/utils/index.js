@@ -14,7 +14,5 @@ export default dbConnection;
 
 export const createJWT = (userId) => {
   // Generate the token
-  return jwt.sign({ userId }, process.env.JWT_SECRET, {
-    expiresIn: "1y", // Adjust as needed
-  });
+  return jwt.sign({ userId }, process.env.JWT_SECRET);
 };
