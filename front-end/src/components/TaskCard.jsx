@@ -14,6 +14,7 @@ import { BGS, formatDate, PRIORITY_STYLES, TASK_TYPE } from "../utils";
 import AddSubTask from "./Task/AddSubTask";
 import TaskDialog from "./Task/TaskDialog";
 import UserInfo from "./UserInfo";
+import { Link } from "react-router-dom";
 
 const ICONS = {
   high: <MdKeyboardDoubleArrowUp />,
@@ -52,9 +53,12 @@ function TaskCard({ task, refetch }) {
                 TASK_TYPE[task.stage]
               }`}
             />
-            <h4 className="line-clamp-1 text-black dark:text-white">
-              {task?.title}
-            </h4>
+            <Link
+              to={`/task/${task._id}`}
+              className="text-black dark:text-white"
+            >
+              <h4 className="line-clamp-1 cursor-pointer">{task?.title}</h4>
+            </Link>
           </div>
 
           <span className="text-sm text-gray-600 dark:text-gray-300">
